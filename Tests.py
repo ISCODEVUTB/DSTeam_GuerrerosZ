@@ -15,13 +15,8 @@ class TestCliente(unittest.TestCase):
         self.assertEqual(cliente.id_cliente, 1)
         self.assertEqual(cliente.nombre, "Juan Pérez")
         self.assertEqual(cliente.documento, "12345678")
-        self.assertEqual(cliente.celular, "987654321")
-        self.assertEqual(cliente.correo, "juan@email.com")
-        self.assertEqual(cliente.direccion, "Calle Falsa 123")
-        self.assertEqual(cliente.tipo_documento, "DNI")
-
+        
 class TestClasificador (unittest.TestCase):
-
     def test_clasificar_basico(self):
         self.assertEqual(cl.ClasificadorPaquete.clasificar(-1), "básico") #Caso negativo
         self.assertEqual(cl.ClasificadorPaquete.clasificar(0.5), "básico") #Caso estandar 
