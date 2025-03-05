@@ -1,9 +1,6 @@
 import unittest
 from cls import clases as cl
 
-import unittest
-from cls import clases as cl  # Importamos clases.py desde la carpeta cls
-
 class TestCliente(unittest.TestCase):
     def test_cliente_valido(self):
         cliente = cl.Cliente(1, "Juan Pérez", "12345678", "987654321", "juan@email.com", "Calle Falsa 123", "DNI")
