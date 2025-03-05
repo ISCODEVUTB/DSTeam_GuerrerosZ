@@ -7,7 +7,7 @@ class TestCliente(unittest.TestCase):
         self.assertTrue(cliente.validar())  # Debe ser verd.
 
     def test_cliente_sin_direccion(self):
-        cliente = cl.Cliente(2, "Ana López", "87654321", "123456789", "ana@email.com", "   ", "DNI")
+        cliente = cl.Cliente(2, "Ana Meza", "87654321", "123456789", "ana@email.com", "   ", "DNI")
         self.assertFalse(cliente.validar())  # Debe ser False (solo espacios)
 
     def creacion_cliente(self):
