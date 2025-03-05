@@ -20,7 +20,8 @@ class TestCliente(unittest.TestCase):
         self.assertEqual(cliente.direccion, "Calle Falsa 123")
         self.assertEqual(cliente.tipo_documento, "DNI")
 
-class Testclasificar (unittest.TestCase):
+class TestClasificador (unittest.TestCase):
+
     def test_clasificar_basico(self):
         self.assertEqual(cl.ClasificadorPaquete.clasificar(-1), "básico") #Caso negativo
         self.assertEqual(cl.ClasificadorPaquete.clasificar(0.5), "básico") #Caso estandar 
@@ -35,7 +36,6 @@ class Testclasificar (unittest.TestCase):
         self.assertEqual(cl.ClasificadorPaquete.clasificar(5.01), "dimensionado") # Caso limite
         self.assertEqual(cl.ClasificadorPaquete.clasificar(10), "dimensionado") # Caso estandar
 
-class Testcalcular_costo (unittest.TestCase):
     def test_costo_basico(self):
         self.assertEqual(cl.ClasificadorPaquete.calcular_costo(0.5, "básico"), 5.0) # Caso basico
 
@@ -45,6 +45,7 @@ class Testcalcular_costo (unittest.TestCase):
     def test_costo_dimensionado(self):
         var=5.01
         self.assertEqual(cl.ClasificadorPaquete.calcular_costo(5.01, "dimensionado"), (10+(var*0.5)))
+
 
 class TestPaquete(unittest.TestCase):
 
