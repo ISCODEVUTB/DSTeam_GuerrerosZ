@@ -230,3 +230,68 @@ class PagoEfectivo(MetodoPago):
     """
     def procesar_pago(self, monto: float) -> str:
         return f"Pago de {monto} USD procesado en Sucursal."
+
+class Factura:
+    """
+    Representa una factura generada a partir de envíos.
+    """
+    def __init__(self, id_factura: int, envios: List[Envio]):
+        self.id_factura = id_factura
+        self.envios = envios
+        self.monto = sum(e.costo_total for e in envios)
+
+    def generar_factura(self):
+        return f"Factura {self.id_factura} generada por {self.monto} USD"
+
+    def procesar_pago(self, metodo_pago: MetodoPago) -> str:
+        return metodo_pago.procesar_pago(self.monto)
+
+
+class SistemaGestion:
+    """
+    Sistema de gestión de clientes, paquetes, envíos y facturación.
+    """
+    def __init__(self):
+        self.clientes = []
+        self.paquetes = []
+        self.envios = []
+        self.facturas = []
+
+    def registrar_cliente(self, cliente: Cliente):
+        self.clientes.append(cliente)
+
+    def agregar_paquete(self, paquete: Paquete):
+        self.paquetes.append(paquete)
+
+    def actualizar_paquete(self, id_paquete: int, dimensiones: str, peso: float, observaciones: str):
+        for p in self.paquetes:
+            if p.id_paquete == id_paquete:
+                p.actualizar_info(dimensiones, peso, observaciones)
+                return True
+        return False
+
+    def aprobar_paquete(self, id_paquete: int):
+        for p in self.paquetes:
+            if p.id_paquete == id_paquete:
+                p.aprobar()
+                return True
+        return False
+
+    def crear_envio(self, id_envio: int, remitente: Cliente, destinatario: Cliente, paquetes: List[int]):
+        paquetes_seleccionados = [p for p in self.paquetes if p.id_paquete in paquetes]
+        envio = Envio(id_envio, remitente, destinatario, paquetes_seleccionados, "")
+        self.envios.append(envio)
+
+    def rastrear_envio(self, id_envio: int) -> Optional[List[str]]:
+        for envio in self.envios:
+            if envio.id_envio == id_envio:
+                return envio.rastrear_envio()
+        return None
+
+    def generar_factura(self, id_factura: int, id_envios: List[int]):
+        envios_facturados = [e for e in self.envios if e.id_envio in id_envios]
+        if envios_facturados:
+            factura = Factura(id_factura, envios_facturados)
+            self.facturas.append(factura)
+            return factura.generar_factura()
+        return "No se encontraron envíos para facturar"

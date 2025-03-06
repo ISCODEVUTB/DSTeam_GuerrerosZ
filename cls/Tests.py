@@ -1,14 +1,14 @@
 import unittest
-import clases as cl  # Importamos todas las clases del módulo cls
+from clases import *   # Importamos todas las clases del módulo cls
 
 class TestSistemaGestion(unittest.TestCase):
     def setUp(self):
         """Configuración inicial de los objetos necesarios para las pruebas."""
-        self.cliente1 = cl.Cliente(1, "Juan Perez", "12345678", "987654321", "juan@example.com", "Calle 123", "DNI")
-        self.cliente2 = cl.Cliente(2, "Maria Gomez", "87654321", "123456789", "maria@example.com", "Avenida 456", "DNI")
-        self.paquete1 = cl.Paquete(1, "10x10x10", 2.0, "Frágil")
-        self.paquete2 = cl.Paquete(2, "20x20x20", 6.0, "Pesado")
-        self.sistema = cl.SistemaGestion()
+        self.cliente1 = Cliente(1, "Juan Perez", "12345678", "987654321", "juan@example.com", "Calle 123", "DNI")
+        self.cliente2 = Cliente(2, "Maria Gomez", "87654321", "123456789", "maria@example.com", "Avenida 456", "DNI")
+        self.paquete1 = Paquete(1, "10x10x10", 2.0, "Frágil")
+        self.paquete2 = Paquete(2, "20x20x20", 6.0, "Pesado")
+        self.sistema =  SistemaGestion()
 
     def test_registrar_cliente(self):
         """Prueba el registro de clientes en el sistema."""
