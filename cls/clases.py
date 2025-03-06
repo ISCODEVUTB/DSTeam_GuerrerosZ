@@ -46,19 +46,7 @@ class Operario(Persona):
     
     def obtenerinformacion(self) ->str:
         return f"ID: {self.__id_persona}\n-Tipo Documento: {self.__tipo_documento}\n-Documento: {self.__documento}\n-Nombre: {self.__nombre}\n-Celular {self.__celular}\n-Correo: {self.__correo}\n-Direccion{self.__direccion}."
-
-class Vendedor(Persona):
-    def __init__(self, token_usuario: str, token_password: str , id_cliente: int, nombre: str, documento: str, celular: str, correo: str, direccion: str, tipo_documento: str):
-        super().__init__(id_cliente,nombre,documento,celular,correo,direccion,tipo_documento)
-        self.__token_usuario = token_usuario
-        self.__token_password = token_password
-
-    def validar(self) -> bool:
-        return bool(self.__direccion.strip())
     
-    def obtenerinformacion(self) ->str:
-        return f"ID: {self.__id_persona}\n-Tipo Documento: {self.__tipo_documento}\n-Documento: {self.__documento}\n-Nombre: {self.__nombre}\n-Celular {self.__celular}\n-Correo: {self.__correo}\n-Direccion{self.__direccion}."
-
 
 class ClasificadorPaquete:
     """
