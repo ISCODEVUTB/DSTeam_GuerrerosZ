@@ -9,7 +9,9 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copiar el código fuente
-COPY . .
+COPY app.py 
+COPY cls/ ./clases/
+COPY cls/ ./metodos
 
 # Exponer el puerto 5000 (ajústalo si usas otro)
 EXPOSE 5000
