@@ -78,10 +78,57 @@ class Terminal:
 
         return clases.Cliente(tipo_cedula, cedula, nombre, celular, correo, direccion)
 
+    def solicitar_info_paquete(self) -> clases.Paquete:
+        """Solicita la información de un paquete y la devuelve como objeto Paquete."""
+
+        def validar_numero(mensaje):
+            """Solicita un número positivo (para peso, dimensiones)."""
+            while True:
+                try:
+                    valor = float(input(mensaje).strip())
+                    if valor > 0:
+                        return valor
+                    print("El valor debe ser un número positivo.")
+                except ValueError:
+                    print("Entrada inválida. Ingrese un número.")
+
+        def validar_texto(mensaje):
+            """Solicita un texto no vacío."""
+            while True:
+                texto = input(mensaje).strip()
+                if texto:
+                    return texto
+                print("El campo no puede estar vacío.")
+
+        def validar_opcion(mensaje, opciones_validas):
+            """Solicita una opción y valida que esté dentro de las permitidas."""
+            while True:
+                opcion = input(mensaje).strip().upper()
+                if opcion in opciones_validas:
+                    return opcion
+                print(f"Opción inválida. Debe ser una de: {', '.join(opciones_validas)}.")
+
+        print("\nIngrese los datos del paquete:")
+
+        peso = validar_numero("Ingrese el peso del paquete (kg): ")
+        largo = validar_numero("Ingrese el largo del paquete (cm): ")
+        ancho = validar_numero("Ingrese el ancho del paquete (cm): ")
+        dimensiones = str(largo + "," + ancho)
+        alto = validar_numero("Ingrese el alto del paquete (cm): ")
+        observaciones = validar_texto("Ingrese observaciones del paquete: ")   
+
+
+
+
+
+
+
     def crear_envio(self) -> str:
         remitente = self.solicitar_info_remitente()
         destinatario = self.solicitar_info_destinatario()
-        
+        self.__sistemaGestion.registrar_cliente(remitente)
+        self.__sistemaGestion.registrar_cliente(destinatario)
+
         envio = self.__sistemaGestion.crear_envio(remitente, destinatario)
         
         print("\n📦 Envío creado exitosamente.")
