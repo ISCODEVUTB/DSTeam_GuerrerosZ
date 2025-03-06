@@ -11,18 +11,53 @@ class Validable(ABC):
         pass
 
 
-class Cliente(Validable):
-    def __init__(self, id_cliente: int, nombre: str, documento: str, celular: str, correo: str, direccion: str, tipo_documento: str):
-        self.__id_cliente = id_cliente
+class Persona(ABC):
+    def __init__(self, id_persona: int, nombre: str, documento: str, celular: str, correo: str, direccion: str, tipo_documento: str):
+        self.__id_persona = id_persona
         self.__nombre = nombre
         self.__tipo_documento = tipo_documento
         self.__documento = documento
         self.__celular = celular
         self.__correo = correo
         self.__direccion = direccion
+    @abstractmethod
+    def obtenerinformacion(self) ->str:
+        return f"ID: {self.__id_persona}\n-Tipo Documento: {self.__tipo_documento}\n-Documento: {self.__documento}\n-Nombre: {self.__nombre}\n-Celular {self.__celular}\n-Correo: {self.__correo}\n-Direccion{self.__direccion}."
+
+
+class Cliente(Persona):
+    def __init__(self, id_cliente: int, nombre: str, documento: str, celular: str, correo: str, direccion: str, tipo_documento: str):
+        super().__init__(id_cliente,nombre,documento,celular,correo,direccion,tipo_documento)
 
     def validar(self) -> bool:
         return bool(self.__direccion.strip())
+    
+    def obtenerinformacion(self) ->str:
+        return f"ID: {self.__id_persona}\n-Tipo Documento: {self.__tipo_documento}\n-Documento: {self.__documento}\n-Nombre: {self.__nombre}\n-Celular {self.__celular}\n-Correo: {self.__correo}\n-Direccion{self.__direccion}."
+
+class Operario(Persona):
+    def __init__(self, token_usuario: str, token_password: str , id_cliente: int, nombre: str, documento: str, celular: str, correo: str, direccion: str, tipo_documento: str):
+        super().__init__(id_cliente,nombre,documento,celular,correo,direccion,tipo_documento)
+        self.__token_usuario = token_usuario
+        self.__token_password = token_password
+
+    def validar(self) -> bool:
+        return bool(self.__direccion.strip())
+    
+    def obtenerinformacion(self) ->str:
+        return f"ID: {self.__id_persona}\n-Tipo Documento: {self.__tipo_documento}\n-Documento: {self.__documento}\n-Nombre: {self.__nombre}\n-Celular {self.__celular}\n-Correo: {self.__correo}\n-Direccion{self.__direccion}."
+
+class Vendedor(Persona):
+    def __init__(self, token_usuario: str, token_password: str , id_cliente: int, nombre: str, documento: str, celular: str, correo: str, direccion: str, tipo_documento: str):
+        super().__init__(id_cliente,nombre,documento,celular,correo,direccion,tipo_documento)
+        self.__token_usuario = token_usuario
+        self.__token_password = token_password
+
+    def validar(self) -> bool:
+        return bool(self.__direccion.strip())
+    
+    def obtenerinformacion(self) ->str:
+        return f"ID: {self.__id_persona}\n-Tipo Documento: {self.__tipo_documento}\n-Documento: {self.__documento}\n-Nombre: {self.__nombre}\n-Celular {self.__celular}\n-Correo: {self.__correo}\n-Direccion{self.__direccion}."
 
 
 class ClasificadorPaquete:

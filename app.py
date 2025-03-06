@@ -1,2 +1,2 @@
 #integracion main
-from cls/clases import *
+from cls import clases
