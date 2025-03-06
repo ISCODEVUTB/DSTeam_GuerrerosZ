@@ -1,5 +1,5 @@
-from cls import metodos  # Importamos el módulo metodos desde cls
-
+from cls import metodos
+from cls.clases import * # Importamos el módulo metodos desde cls
 def main():
     """Función principal del sistema que maneja la autenticación y el menú principal."""
     print("\n AUTENTICACIÓN REQUERIDA")
