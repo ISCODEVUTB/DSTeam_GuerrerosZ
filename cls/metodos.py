@@ -1,23 +1,88 @@
 import clases
-from typing import List, Optional
-class Terminal():
+import re
+from typing import Optional
+
+class Terminal:
     def __init__(self):
         self.__sistemaGestion = clases.SistemaGestion()
-        self.__conjuntoCredencialesOperarios =[("operario1","12345")]
-    
+        self.__conjuntoCredencialesOperarios = [("operario1", "12345")]
+
     def mostrar_mensaje_principal(self):
         print("Mensaje texto plano mensaje de entrada")
 
-    def autenticar_credencial(self, token_usuario:str, token_contraseña:str) ->bool:
+    def autenticar_credencial(self, token_usuario: str, token_contraseña: str) -> bool:
         for usuario, contraseña in self.__conjuntoCredencialesOperarios:
             if usuario == token_usuario and contraseña == token_contraseña:
                 return True
         return False
-    
-    def crear_paquete(self, id_paquete: int, dimensiones: str, peso: float, observaciones: str) ->clases.Paquete:
-        return clases.Paquete(id_paquete, dimensiones, peso, observaciones)
 
-    def crear_envio(self, id_envio: int, remitente: clases.Cliente, destinatario: clases.Cliente, paquetes: List[clases.Paquete], observacion: str):
-        return clases.Envio(id_envio,remitente,destinatario,paquetes,observacion)
-    
+    def solicitar_info_remitente(self) -> clases.Cliente:
+        return self.__solicitar_info_cliente("remitente")
 
+    def solicitar_info_destinatario(self) -> clases.Cliente:
+        return self.__solicitar_info_cliente("destinatario")
+
+    def __solicitar_info_cliente(self, tipo: str) -> clases.Cliente:
+        """Solicita la información de un cliente (remitente o destinatario)"""
+        print(f"\nIngrese los datos del {tipo}:")
+
+        def validar_opcion(mensaje, opciones_validas):
+            while True:
+                opcion = input(mensaje).strip().upper()
+                if opcion in opciones_validas:
+                    return opcion
+                print(f"Opción inválida. Debe ser una de: {', '.join(opciones_validas)}.")
+
+        def validar_cedula(mensaje):
+            while True:
+                cedula = input(mensaje).strip()
+                if cedula.isdigit() and 7 <= len(cedula) <= 10:
+                    return cedula
+                print("Cédula inválida. Debe contener solo números y tener entre 7 y 10 dígitos.")
+
+        def validar_nombre(mensaje):
+            while True:
+                nombre = input(mensaje).strip()
+                if re.match(r"^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$", nombre):
+                    return nombre
+                print("Nombre inválido. Debe contener solo letras y espacios.")
+
+        def validar_celular(mensaje):
+            while True:
+                celular = input(mensaje).strip()
+                if celular.isdigit() and len(celular) == 10:
+                    return celular
+                print("Celular inválido. Debe contener exactamente 10 dígitos numéricos.")
+
+        def validar_correo(mensaje):
+            while True:
+                correo = input(mensaje).strip()
+                if re.match(r"^[\w\.-]+@[\w\.-]+\.\w+$", correo):
+                    return correo
+                print("Correo inválido. Debe ser un correo con formato correcto (ejemplo@dominio.com).")
+
+        def validar_direccion(mensaje):
+            while True:
+                direccion = input(mensaje).strip()
+                if direccion:
+                    return direccion
+                print("Dirección inválida. No puede estar vacía.")
+
+        # Solicitar datos con validación
+        tipo_cedula = validar_opcion("Ingrese tipo de cédula (CC/CE/PAS): ", ["CC", "CE", "PAS"])
+        cedula = validar_cedula("Ingrese cédula: ")
+        nombre = validar_nombre("Ingrese nombre: ")
+        celular = validar_celular("Ingrese celular: ")
+        correo = validar_correo("Ingrese correo: ")
+        direccion = validar_direccion("Ingrese dirección: ")
+
+        return clases.Cliente(tipo_cedula, cedula, nombre, celular, correo, direccion)
+
+    def crear_envio(self) -> str:
+        remitente = self.solicitar_info_remitente()
+        destinatario = self.solicitar_info_destinatario()
+        
+        envio = self.__sistemaGestion.crear_envio(remitente, destinatario)
+        
+        print("\n📦 Envío creado exitosamente.")
+        return envio
