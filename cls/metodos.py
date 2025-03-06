@@ -119,14 +119,15 @@ class Terminal:
 
         print("\n Envío creado exitosamente.")
         return envio
-def crear_factura(self):
+    
+    def crear_factura(self):
         """Genera una factura basada en los envíos seleccionados por el usuario."""
         
         if not self.__sistemaGestion.envios:
-            print("❌ No hay envíos disponibles para facturar.")
+            print("No hay envíos disponibles para facturar.")
             return
 
-        print("\n📜 Envíos disponibles para facturar:")
+        print("\n Envíos disponibles para facturar:")
         for envio in self.__sistemaGestion.envios:
             print(f"ID: {envio._Envio__id_envio}, Remitente: {envio._Envio__remitente._Cliente__nombre}, Total: {envio._Envio__costo_total} USD")
 
@@ -134,7 +135,7 @@ def crear_factura(self):
         id_envios = [int(id.strip()) for id in id_envios.split(",") if id.strip().isdigit()]
         
         if not id_envios:
-            print("❌ No se han ingresado IDs válidos.")
+            print("No se han ingresado IDs válidos.")
             return
 
         nuevo_id_factura = len(self.__sistemaGestion.facturas) + 1  # Generar un ID único
@@ -144,13 +145,13 @@ def crear_factura(self):
             print(factura)
             return
 
-        print(f"\n✅ {factura}")
+        print(f"\n{factura}")
 
         # Procesar pago
         metodo_pago = self.seleccionar_metodo_pago()
         if metodo_pago:
             resultado_pago = metodo_pago.procesar_pago(sum(e._Envio__costo_total for e in self.__sistemaGestion.envios if e._Envio__id_envio in id_envios))
-            print(f"💳 {resultado_pago}")
+            print(f"{resultado_pago}")
 
 def seleccionar_metodo_pago(self) -> Optional[clases.MetodoPago]:
     """Permite al usuario elegir un método de pago."""
@@ -160,7 +161,7 @@ def seleccionar_metodo_pago(self) -> Optional[clases.MetodoPago]:
         "3": clases.PagoEfectivo()
     }
 
-    print("\n💰 Métodos de Pago Disponibles:")
+    print("\n Métodos de Pago Disponibles:")
     print("1. Tarjeta de Crédito")
     print("2. PayPal")
     print("3. Pago en Efectivo (Sucursal)")
@@ -171,7 +172,7 @@ def seleccionar_metodo_pago(self) -> Optional[clases.MetodoPago]:
 
 def buscar_y_filtrar(self):
     """Permite buscar y filtrar clientes, envíos o paquetes en el sistema."""
-    print("\n🔍 Opciones de búsqueda:")
+    print("\n Opciones de búsqueda:")
     print("1. Buscar Cliente")
     print("2. Buscar Envío")
     print("3. Buscar Paquete")
