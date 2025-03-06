@@ -32,7 +32,6 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
         
-
       - name: Build Docker image
         run: |
           docker build -t amaury0619/my-image:latest .
@@ -40,3 +39,19 @@ jobs:
       - name: Push Docker image
         run: |
           docker push amaury0619/my-image:latest
+
+      - name: Install SonarQube scanner
+        run: |
+          curl -sSLo sonar-scanner-cli.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
+          unzip sonar-scanner-cli.zip
+          sudo mv sonar-scanner-4.6.2.2472-linux /opt/sonar-scanner
+
+      - name: Run SonarQube scanner
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          /opt/sonar-scanner/bin/sonar-scanner \
+            -Dsonar.projectKey=your_project_key \
+            -Dsonar.sources=. \
+            -Dsonar.host.url=https://your-sonar-instance-url \
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
