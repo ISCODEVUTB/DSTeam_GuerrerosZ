@@ -1,5 +1,5 @@
 import unittest
-import clases as cl# Importamos todas las clases del módulo cls
+import clases as cl  # Importamos todas las clases del módulo cls
 
 class TestSistemaGestion(unittest.TestCase):
     def setUp(self):
@@ -23,9 +23,9 @@ class TestSistemaGestion(unittest.TestCase):
     def test_aprobar_paquete(self):
         """Prueba la aprobación de un paquete antes del envío."""
         self.sistema.agregar_paquete(self.paquete1)
-        self.assertFalse(self.paquete1.aprobado)
+        self.assertFalse(self.paquete1.aprobado)  # Verifica que el paquete no está aprobado inicialmente
         self.sistema.aprobar_paquete(1)
-        self.assertTrue(self.paquete1.aprobado)
+        self.assertTrue(self.paquete1.aprobado)  # Verifica que el paquete ha sido aprobado
 
     def test_crear_envio(self):
         """Prueba la creación de un envío solo con paquetes aprobados."""
@@ -34,7 +34,7 @@ class TestSistemaGestion(unittest.TestCase):
         self.sistema.agregar_paquete(self.paquete1)
         self.sistema.aprobar_paquete(1)
         self.sistema.crear_envio(1, self.cliente1, self.cliente2, [1])
-        self.assertEqual(len(self.sistema.envios), 1)
+        self.assertEqual(len(self.sistema.envios), 1)  # Verifica que el envío fue creado correctamente
 
     def test_rastrear_envio(self):
         """Prueba el rastreo de un envío."""
@@ -44,7 +44,7 @@ class TestSistemaGestion(unittest.TestCase):
         self.sistema.aprobar_paquete(1)
         self.sistema.crear_envio(1, self.cliente1, self.cliente2, [1])
         estado = self.sistema.rastrear_envio(1)
-        self.assertIsInstance(estado, list)
+        self.assertIsInstance(estado, list)  # Verifica que el rastreo devuelve una lista de estados
 
     def test_generar_factura(self):
         """Prueba la generación de una factura."""
@@ -54,8 +54,7 @@ class TestSistemaGestion(unittest.TestCase):
         self.sistema.aprobar_paquete(1)
         self.sistema.crear_envio(1, self.cliente1, self.cliente2, [1])
         factura = self.sistema.generar_factura(1, [1])
-        self.assertIn("Factura", factura)
+        self.assertIn("Factura", factura)  # Verifica que el texto "Factura" esté presente en la salida
 
-if __name__ == "__main__":
-    unittest.main()
 
+unittest.main()

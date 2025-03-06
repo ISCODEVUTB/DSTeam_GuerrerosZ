@@ -12,7 +12,14 @@ class Validable(ABC):
 
 
 class Persona(ABC):
-    def __init__(self, id_persona: int, nombre: str, documento: str, celular: str, correo: str, direccion: str, tipo_documento: str):
+    """
+    Clase base abstracta para representar a una persona con información básica.
+    """
+    def __init__(self, id_persona: int, nombre: str, documento: str, celular: str, 
+                 correo: str, direccion: str, tipo_documento: str):
+        """
+        Inicializa los atributos comunes de una persona.
+        """
         self._id_persona = id_persona
         self._nombre = nombre
         self._tipo_documento = tipo_documento
@@ -20,33 +27,74 @@ class Persona(ABC):
         self._celular = celular
         self._correo = correo
         self.direccion = direccion
+
     @abstractmethod
-    def obtenerinformacion(self) ->str:
-        return f"ID: {self.id_persona}\n-Tipo Documento: {self.tipo_documento}\n-Documento: {self.documento}\n-Nombre: {self.nombre}\n-Celular {self.celular}\n-Correo: {self.correo}\n-Direccion{self.direccion}."
+    def obtenerinformacion(self) -> str:
+        """
+        Retorna la información de la persona en formato de cadena de texto.
+        """
+        return (f"ID: {self.id_persona}\n-Tipo Documento: {self.tipo_documento}"
+                f"\n-Documento: {self.documento}\n-Nombre: {self.nombre}"
+                f"\n-Celular {self.celular}\n-Correo: {self.correo}"
+                f"\n-Direccion{self.direccion}.")
 
 
 class Cliente(Persona):
-    def __init__(self, id_cliente: int, nombre: str, documento: str, celular: str, correo: str, direccion: str, tipo_documento: str):
-        super().__init__(id_cliente,nombre,documento,celular,correo,direccion,tipo_documento)
+    """
+    Representa a un cliente, heredando de la clase Persona.
+    """
+    def __init__(self, id_cliente: int, nombre: str, documento: str, celular: str, 
+                 correo: str, direccion: str, tipo_documento: str):
+        """
+        Inicializa los atributos del cliente.
+        """
+        super().__init__(id_cliente, nombre, documento, celular, correo, direccion, tipo_documento)
 
     def validar(self) -> bool:
+        """
+        Valida que la dirección del cliente no esté vacía.
+        """
         return bool(self.direccion.strip())
-    
-    def obtenerinformacion(self) ->str:
-        return f"ID: {self.id_persona}\n-Tipo Documento: {self.tipo_documento}\n-Documento: {self.documento}\n-Nombre: {self.nombre}\n-Celular {self.celular}\n-Correo: {self.correo}\n-Direccion{self.direccion}."
+
+    def obtenerinformacion(self) -> str:
+        """
+        Retorna la información del cliente.
+        """
+        return (f"ID: {self.id_persona}\n-Tipo Documento: {self.tipo_documento}"
+                f"\n-Documento: {self.documento}\n-Nombre: {self.nombre}"
+                f"\n-Celular {self.celular}\n-Correo: {self.correo}"
+                f"\n-Direccion{self.direccion}.")
+
 
 class Operario(Persona):
-    def __init__(self, token_usuario: str, token_password: str , id_cliente: int, nombre: str, documento: str, celular: str, correo: str, direccion: str, tipo_documento: str):
-        super().__init__(id_cliente,nombre,documento,celular,correo,direccion,tipo_documento)
+    """
+    Representa a un operario con credenciales de autenticación.
+    """
+    def __init__(self, token_usuario: str, token_password: str, id_cliente: int, 
+                 nombre: str, documento: str, celular: str, correo: str, 
+                 direccion: str, tipo_documento: str):
+        """
+        Inicializa los atributos del operario.
+        """
+        super().__init__(id_cliente, nombre, documento, celular, correo, direccion, tipo_documento)
         self._token_usuario = token_usuario
         self._token_password = token_password
 
     def validar(self) -> bool:
+        """
+        Valida que la dirección del operario no esté vacía.
+        """
         return bool(self.__direccion.strip())
-    
-    def obtenerinformacion(self) ->str:
-        return f"ID: {self.id_persona}\n-Tipo Documento: {self.tipo_documento}\n-Documento: {self.documento}\n-Nombre: {self.nombre}\n-Celular {self.celular}\n-Correo: {self.correo}\n-Direccion{self.direccion}."
-    
+
+    def obtenerinformacion(self) -> str:
+        """
+        Retorna la información del operario.
+        """
+        return (f"ID: {self.id_persona}\n-Tipo Documento: {self.tipo_documento}"
+                f"\n-Documento: {self.documento}\n-Nombre: {self.nombre}"
+                f"\n-Celular {self.celular}\n-Correo: {self.correo}"
+                f"\n-Direccion{self.direccion}.")
+
 
 class ClasificadorPaquete:
     """
@@ -61,8 +109,7 @@ class ClasificadorPaquete:
             return "básico"
         elif 1 <= peso <= 5:
             return "estándar"
-        else:
-            return "dimensionado"
+        return "dimensionado"
 
     @staticmethod
     def calcular_costo(peso: float, tipo: str) -> float:
@@ -72,13 +119,15 @@ class ClasificadorPaquete:
         base = 5.0
         if tipo == "básico":
             return base
-        elif tipo == "estándar":
+        if tipo == "estándar":
             return base * 1.5
-        else:
-            return base * 2 + (peso * 0.5)
+        return base * 2 + (peso * 0.5)
 
 
 class Paquete:
+    """
+    Representa un paquete con dimensiones, peso y estado de aprobación.
+    """
     def __init__(self, id_paquete: int, dimensiones: str, peso: float, observaciones: str):
         """
         Inicializa un paquete y calcula automáticamente su tipo y costo de envío.
@@ -109,11 +158,19 @@ class Paquete:
 
 
 class Envio:
-    def __init__(self, id_envio: int, remitente: Cliente, destinatario: Cliente, paquetes: List[Paquete], observacion: str):
+    """
+    Representa un envío con información de remitente, destinatario y paquetes asociados.
+    """
+    def __init__(self, id_envio: int, remitente: Cliente, destinatario: Cliente, 
+                 paquetes: List[Paquete], observacion: str):
+        """
+        Inicializa un envío, asegurándose de que todos los paquetes estén aprobados.
+        """
         if not all(p.aprobado for p in paquetes):
             raise ValueError("Todos los paquetes deben estar aprobados antes del envío")
         if not destinatario.validar():
             raise ValueError("Dirección del destinatario no válida")
+        
         self.id_envio = id_envio
         self.remitente = remitente
         self.destinatario = destinatario
@@ -130,6 +187,9 @@ class Envio:
         self.actualizar_trazabilidad(estado)
 
     def actualizar_trazabilidad(self, estado: str):
+        """
+        Agrega un estado a la lista de trazabilidad del envío.
+        """
         self.trazabilidad.append(estado)
 
     def rastrear_envio(self) -> List[str]:
@@ -149,79 +209,24 @@ class MetodoPago(ABC):
 
 
 class PagoTarjeta(MetodoPago):
+    """
+    Representa un pago realizado con tarjeta de crédito.
+    """
     def procesar_pago(self, monto: float) -> str:
         return f"Pago de {monto} USD procesado con tarjeta de crédito."
 
 
 class PagoPayPal(MetodoPago):
+    """
+    Representa un pago realizado con PayPal.
+    """
     def procesar_pago(self, monto: float) -> str:
         return f"Pago de {monto} USD procesado con PayPal."
+
+
 class PagoEfectivo(MetodoPago):
+    """
+    Representa un pago realizado en efectivo.
+    """
     def procesar_pago(self, monto: float) -> str:
         return f"Pago de {monto} USD procesado en Sucursal."
-
-
-class Factura:
-    """
-    Representa una factura generada a partir de envíos.
-    """
-    def __init__(self, id_factura: int, envios: List[Envio]):
-        self.id_factura = id_factura
-        self.envios = envios
-        self.monto = sum(e.costo_total for e in envios)
-
-    def generar_factura(self):
-        return f"Factura {self.id_factura} generada por {self.monto} USD"
-
-    def procesar_pago(self, metodo_pago: MetodoPago) -> str:
-        return metodo_pago.procesar_pago(self.monto)
-
-
-class SistemaGestion:
-    """
-    Sistema de gestión de clientes, paquetes, envíos y facturación.
-    """
-    def __init__(self):
-        self.clientes = []
-        self.paquetes = []
-        self.envios = []
-        self.facturas = []
-
-    def registrar_cliente(self, cliente: Cliente):
-        self.clientes.append(cliente)
-
-    def agregar_paquete(self, paquete: Paquete):
-        self.paquetes.append(paquete)
-
-    def actualizar_paquete(self, id_paquete: int, dimensiones: str, peso: float, observaciones: str):
-        for p in self.paquetes:
-            if p.id_paquete == id_paquete:
-                p.actualizar_info(dimensiones, peso, observaciones)
-                return True
-        return False
-
-    def aprobar_paquete(self, id_paquete: int):
-        for p in self.paquetes:
-            if p.id_paquete == id_paquete:
-                p.aprobar()
-                return True
-        return False
-
-    def crear_envio(self, id_envio: int, remitente: Cliente, destinatario: Cliente, paquetes: List[int]):
-        paquetes_seleccionados = [p for p in self.paquetes if p.id_paquete in paquetes]
-        envio = Envio(id_envio, remitente, destinatario, paquetes_seleccionados, "")
-        self.envios.append(envio)
-
-    def rastrear_envio(self, id_envio: int) -> Optional[List[str]]:
-        for envio in self.envios:
-            if envio.id_envio == id_envio:
-                return envio.rastrear_envio()
-        return None
-
-    def generar_factura(self, id_factura: int, id_envios: List[int]):
-        envios_facturados = [e for e in self.envios if e.id_envio in id_envios]
-        if envios_facturados:
-            factura = Factura(id_factura, envios_facturados)
-            self.facturas.append(factura)
-            return factura.generar_factura()
-        return "No se encontraron envíos para facturar"
