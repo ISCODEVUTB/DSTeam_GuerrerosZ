@@ -1,7 +1,7 @@
 from cls import metodos
 
 def main():
-    print("\n🔐 AUTENTICACIÓN REQUERIDA")
+    print("\n AUTENTICACIÓN REQUERIDA")
     
     terminal = metodos.Terminal()  # Creamos el objeto Terminal
 
@@ -10,13 +10,13 @@ def main():
         contraseña = input("Ingrese contraseña: ").strip()
         
         if terminal.autenticar_credencial(usuario, contraseña):
-            print("✅ Autenticación exitosa.")
+            print(" Autenticación exitosa.")
             break  # Sale del bucle de autenticación y continúa con el menú principal
         else:
-            print("❌ Credenciales incorrectas. Intente de nuevo.")
+            print(" Credenciales incorrectas. Intente de nuevo.")
 
     while True:
-        print("\n📦 MENÚ PRINCIPAL")
+        print("\n MENÚ PRINCIPAL")
         print("1. Crear Envío")
         print("2. Generar Factura")
         print("3. Buscar y Filtrar")
@@ -38,11 +38,11 @@ def main():
             terminal.mostrar_mensaje_principal()
 
         elif opcion == "5":
-            print("👋 Saliendo del sistema. ¡Hasta luego!")
+            print(" Saliendo del sistema. ¡Hasta luego!")
             break
 
         else:
-            print("❌ Opción inválida. Intente de nuevo.")
+            print(" Opción inválida. Intente de nuevo.")
 
 if __name__ == "__main__":
     main()

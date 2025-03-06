@@ -13,16 +13,16 @@ class Validable(ABC):
 
 class Persona(ABC):
     def __init__(self, id_persona: int, nombre: str, documento: str, celular: str, correo: str, direccion: str, tipo_documento: str):
-        self.__id_persona = id_persona
-        self.__nombre = nombre
-        self.__tipo_documento = tipo_documento
-        self.__documento = documento
-        self.__celular = celular
-        self.__correo = correo
-        self.__direccion = direccion
+        self._id_persona = id_persona
+        self._nombre = nombre
+        self._tipo_documento = tipo_documento
+        self._documento = documento
+        self._celular = celular
+        self._correo = correo
+        self.direccion = direccion
     @abstractmethod
     def obtenerinformacion(self) ->str:
-        return f"ID: {self.__id_persona}\n-Tipo Documento: {self.__tipo_documento}\n-Documento: {self.__documento}\n-Nombre: {self.__nombre}\n-Celular {self.__celular}\n-Correo: {self.__correo}\n-Direccion{self.__direccion}."
+        return f"ID: {self.id_persona}\n-Tipo Documento: {self.tipo_documento}\n-Documento: {self.documento}\n-Nombre: {self.nombre}\n-Celular {self.celular}\n-Correo: {self.correo}\n-Direccion{self.direccion}."
 
 
 class Cliente(Persona):
@@ -30,22 +30,22 @@ class Cliente(Persona):
         super().__init__(id_cliente,nombre,documento,celular,correo,direccion,tipo_documento)
 
     def validar(self) -> bool:
-        return bool(self.__direccion.strip())
+        return bool(self.direccion.strip())
     
     def obtenerinformacion(self) ->str:
-        return f"ID: {self.__id_persona}\n-Tipo Documento: {self.__tipo_documento}\n-Documento: {self.__documento}\n-Nombre: {self.__nombre}\n-Celular {self.__celular}\n-Correo: {self.__correo}\n-Direccion{self.__direccion}."
+        return f"ID: {self.id_persona}\n-Tipo Documento: {self.tipo_documento}\n-Documento: {self.documento}\n-Nombre: {self.nombre}\n-Celular {self.celular}\n-Correo: {self.correo}\n-Direccion{self.direccion}."
 
 class Operario(Persona):
     def __init__(self, token_usuario: str, token_password: str , id_cliente: int, nombre: str, documento: str, celular: str, correo: str, direccion: str, tipo_documento: str):
         super().__init__(id_cliente,nombre,documento,celular,correo,direccion,tipo_documento)
-        self.__token_usuario = token_usuario
-        self.__token_password = token_password
+        self._token_usuario = token_usuario
+        self._token_password = token_password
 
     def validar(self) -> bool:
         return bool(self.__direccion.strip())
     
     def obtenerinformacion(self) ->str:
-        return f"ID: {self.__id_persona}\n-Tipo Documento: {self.__tipo_documento}\n-Documento: {self.__documento}\n-Nombre: {self.__nombre}\n-Celular {self.__celular}\n-Correo: {self.__correo}\n-Direccion{self.__direccion}."
+        return f"ID: {self.id_persona}\n-Tipo Documento: {self.tipo_documento}\n-Documento: {self.documento}\n-Nombre: {self.nombre}\n-Celular {self.celular}\n-Correo: {self.correo}\n-Direccion{self.direccion}."
     
 
 class ClasificadorPaquete:
@@ -114,13 +114,13 @@ class Envio:
             raise ValueError("Todos los paquetes deben estar aprobados antes del envío")
         if not destinatario.validar():
             raise ValueError("Dirección del destinatario no válida")
-        self.__id_envio = id_envio
-        self.__remitente = remitente
-        self.__destinatario = destinatario
-        self.__paquetes = paquetes
-        self.__trazabilidad = []
-        self.__observaciones = observacion
-        self.__costo_total = sum(p.costo_envio for p in paquetes)
+        self.id_envio = id_envio
+        self.remitente = remitente
+        self.destinatario = destinatario
+        self.paquetes = paquetes
+        self.trazabilidad = []
+        self.observaciones = observacion
+        self.costo_total = sum(p.costo_envio for p in paquetes)
         self.actualizar_trazabilidad("Envío creado")
 
     def actualizar_estado(self, estado: str):
