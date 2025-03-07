@@ -1,6 +1,9 @@
 # Usar una imagen oficial de Python
 FROM python:3.10-slim
 
+# Crea un usuario no-root (por ejemplo, "appuser")
+RUN adduser --disabled-password --gecos '' appuser
+
 # Establecer el directorio de trabajo
 WORKDIR /app
 
@@ -12,6 +15,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY app.py 
 COPY cls/ ./clases/
 COPY cls/ ./metodos/
+
+
+# Cambia al usuario no-root
+USER appuser
 
 # Exponer el puerto 5000 (ajústalo si usas otro)
 EXPOSE 5000
