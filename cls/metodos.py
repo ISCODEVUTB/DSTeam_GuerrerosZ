@@ -1,4 +1,4 @@
-import clases   # Importamos todas las clases del módulo cls
+from cls import clases   # Importamos todas las clases del módulo cls
 import re
 from typing import Optional, List
 
