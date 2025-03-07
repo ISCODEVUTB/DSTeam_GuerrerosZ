@@ -1,5 +1,5 @@
 import unittest
-from src.classes import CardPayment
+
 
 class TestCardPayment(unittest.TestCase):
     def setUp(self):
@@ -12,3 +12,4 @@ class TestCardPayment(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
