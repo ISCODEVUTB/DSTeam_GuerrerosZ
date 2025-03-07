@@ -1,4 +1,4 @@
-import Person
+from Person import Person
 
 class Operator(Person):
     """
