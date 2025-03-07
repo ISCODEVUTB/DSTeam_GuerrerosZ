@@ -1,50 +1,51 @@
-from cls import metodos  # Importamos el módulo metodos desde cls
+from src import methods  # Importamos el módulo methods desde src
+
 def main():
-    """Función principal del sistema que maneja la autenticación y el menú principal."""
-    print("\n AUTENTICACIÓN REQUERIDA")
+    """Main function of the system that handles authentication and the main menu."""
+    print("\n AUTHENTICATION REQUIRED")
     
-    terminal = metodos.Terminal()  # Creamos el objeto Terminal
+    terminal = methods.Terminal()  # Create the Terminal object
 
     while True:
-        # Solicita credenciales al usuario
-        usuario = input("Ingrese usuario: ").strip()
-        contraseña = input("Ingrese contraseña: ").strip()
+        # Request credentials from the user
+        user = input("Enter username: ").strip()
+        password = input("Enter password: ").strip()
         
-        if terminal.autenticar_credencial(usuario, contraseña):
-            print(" Autenticación exitosa.")
-            break  # Sale del bucle de autenticación y continúa con el menú principal
+        if terminal.authenticate_credentials(user, password):
+            print(" Authentication successful.")
+            break  # Exit the authentication loop and continue to the main menu
         else:
-            print(" Credenciales incorrectas. Intente de nuevo.")
+            print(" Incorrect credentials. Try again.")
 
     while True:
-        # Despliega el menú principal del sistema
-        print("\n MENÚ PRINCIPAL")
-        print("1. Crear Envío")
-        print("2. Generar Factura")
-        print("3. Buscar y Filtrar")
-        print("4. Mostrar Mensaje Principal")
-        print("5. Salir")
+        # Display the main menu of the system
+        print("\n MAIN MENU")
+        print("1. Create Shipment")
+        print("2. Generate Invoice")
+        print("3. Search and Filter")
+        print("4. Show Main Message")
+        print("5. Exit")
 
-        opcion = input("Seleccione una opción: ").strip()
+        option = input("Select an option: ").strip()
 
-        if opcion == "1":
-            terminal.crear_envio()  # Llama al método para crear un envío
+        if option == "1":
+            terminal.create_shipment()  # Call the method to create a shipment
 
-        elif opcion == "2":
-            terminal.crear_factura()  # Llama al método para generar una factura
+        elif option == "2":
+            terminal.create_invoice()  # Call the method to generate an invoice
 
-        elif opcion == "3":
-            terminal.buscar_y_filtrar()  # Llama al método para buscar y filtrar
+        elif option == "3":
+            terminal.search_and_filter()  # Call the method to search and filter
 
-        elif opcion == "4":
-            terminal.mostrar_mensaje_principal()  # Muestra un mensaje principal
+        elif option == "4":
+            terminal.show_main_message()  # Show a main message
 
-        elif opcion == "5":
-            print(" Saliendo del sistema. ¡Hasta luego!")
-            break  # Termina la ejecución del programa
+        elif option == "5":
+            print(" Exiting the system. Goodbye!")
+            break  # Terminate the program execution
 
         else:
-            print(" Opción inválida. Intente de nuevo.")  # Manejo de error por opción no válida
+            print(" Invalid option. Try again.")  # Handle error for invalid option
 
 if __name__ == "__main__":
-    main()  # Ejecuta la función principal si el script es ejecutado directamente
+    main()  # Execute the main function if the script is run directly
