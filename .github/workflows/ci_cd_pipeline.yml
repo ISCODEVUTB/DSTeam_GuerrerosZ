@@ -31,8 +31,10 @@ jobs:
       - name: Run tests with coverage
         env:
           USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
+          PYTHONPATH: ${{ github.workspace }}
         run: |
-           PYTHONPATH=$PWD pytest --cov=. --cov-report=term --cov-report=xml --cov-report=html
+          pytest --cov=. --cov-report=term --cov-report=xml --cov-report=html
+
 
 
       # Subir el reporte de cobertura como artefacto
