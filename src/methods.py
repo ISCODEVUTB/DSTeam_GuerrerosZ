@@ -5,7 +5,7 @@ from typing import Optional, List
 class Terminal:
     def __init__(self):
         """Initializes the terminal with a management system and operator credentials."""
-        self.__management_system = ManagementSystem()
+        self.__management_system = ManagementSystem.ManagementSystem()
         self.__operator_credentials_set = [("operator1", "12345")]
 
     def show_main_message(self):
