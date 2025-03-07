@@ -153,140 +153,16 @@ class Package:
         self.approved = True
 
 
-class Shipment:
-    """
-    Represents a shipment with sender, recipient, and associated packages information.
-    """
-    def __init__(self, shipment_id: int, sender: Client, recipient: Client, packages: List[Package], observation: str):
-        """
-        Initializes a shipment, ensuring all packages are approved.
-        """
-        if not all(p.approved for p in packages):
-            raise ValueError("All packages must be approved before shipping")
-        if not recipient.validate():
-            raise ValueError("Recipient's address is invalid")
-        
-        self.shipment_id = shipment_id
-        self.sender = sender
-        self.recipient = recipient
-        self.packages = packages
-        self.tracking = []
-        self.observations = observation
-        self.total_cost = sum(p.shipping_cost for p in packages)
-        self.update_tracking("Shipment created")
-
-    def update_status(self, status: str):
-        """
-        Adds a new status to the shipment's tracking.
-        """
-        self.update_tracking(status)
-
-    def update_tracking(self, status: str):
-        """
-        Adds a status to the shipment's tracking list.
-        """
-        self.tracking.append(status)
-
-    def track_shipment(self) -> List[str]:
-        """
-        Returns the list of shipment statuses.
-        """
-        return self.tracking
 
 
-class PaymentMethod(ABC):
-    """
-    Abstract class for payment methods.
-    """
-    @abstractmethod
-    def process_payment(self, amount: float) -> str:
-        pass
 
 
-class CardPayment(PaymentMethod):
-    """
-    Represents a payment made with a credit card.
-    """
-    def process_payment(self, amount: float) -> str:
-        return f"Payment of {amount} USD processed with credit card."
 
 
-class PayPalPayment(PaymentMethod):
-    """
-    Represents a payment made with PayPal.
-    """
-    def process_payment(self, amount: float) -> str:
-        return f"Payment of {amount} USD processed with PayPal."
 
 
-class CashPayment(PaymentMethod):
-    """
-    Represents a payment made in cash.
-    """
-    def process_payment(self, amount: float) -> str:
-        return f"Payment of {amount} USD processed at Branch."
-
-class Invoice:
-    """
-    Represents an invoice generated from shipments.
-    """
-    def __init__(self, invoice_id: int, shipments: List[Shipment]):
-        self.invoice_id = invoice_id
-        self.shipments = shipments
-        self.amount = sum(e.total_cost for e in shipments)
-
-    def generate_invoice(self):
-        return f"Invoice {self.invoice_id} generated for {self.amount} USD"
-
-    def process_payment(self, payment_method: PaymentMethod) -> str:
-        return payment_method.process_payment(self.amount)
 
 
-class ManagementSystem:
-    """
-    Management system for clients, packages, shipments, and billing.
-    """
-    def __init__(self):
-        self.clients = []
-        self.packages = []
-        self.shipments = []
-        self.invoices = []
 
-    def register_client(self, client: Client):
-        self.clients.append(client)
 
-    def add_package(self, package: Package):
-        self.packages.append(package)
 
-    def update_package(self, package_id: int, dimensions: str, weight: float, observations: str):
-        for p in self.packages:
-            if p.package_id == package_id:
-                p.update_info(dimensions, weight, observations)
-                return True
-        return False
-
-    def approve_package(self, package_id: int):
-        for p in self.packages:
-            if p.package_id == package_id:
-                p.approve()
-                return True
-        return False
-
-    def create_shipment(self, shipment_id: int, sender: Client, recipient: Client, packages: List[int]):
-        selected_packages = [p for p in self.packages if p.package_id in packages]
-        shipment = Shipment(shipment_id, sender, recipient, selected_packages, "")
-        self.shipments.append(shipment)
-
-    def track_shipment(self, shipment_id: int) -> Optional[List[str]]:
-        for shipment in self.shipments:
-            if shipment.shipment_id == shipment_id:
-                return shipment.track_shipment()
-        return None
-
-    def generate_invoice(self, invoice_id: int, shipment_ids: List[int]):
-        invoiced_shipments = [e for e in self.shipments if e.shipment_id in shipment_ids]
-        if invoiced_shipments:
-            invoice = Invoice(invoice_id, invoiced_shipments)
-            self.invoices.append(invoice)
-            return invoice.generate_invoice()
-        return "No shipments found to invoice"

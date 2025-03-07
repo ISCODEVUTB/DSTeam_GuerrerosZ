@@ -1,7 +1,8 @@
-from Client import *
-from Package import *
-from Shipment import * 
-from Invoice import *
+from Client import Client
+from Package import Package
+from Shipment import Shipment
+from Invoice import Invoice
+from typing import List, Optional
 class ManagementSystem:
     """
     Management system for clients, packages, shipments, and billing.

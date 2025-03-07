@@ -1,5 +1,5 @@
-from Client import *
-from Package import *
+from Client import Client
+from Package import Package
 from typing import List
 class Shipment:
     """

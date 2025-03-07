@@ -1,4 +1,4 @@
-from Paymentmethod import *
+from Paymentmethod import PaymentMethod
 class CashPayment(PaymentMethod):
     """
     Represents a payment made in cash.
