@@ -1,8 +1,7 @@
 import unittest
-from src.classes.Client import Client
-from src.classes.Package import Package
-from src.classes.Shipment import Shipment
-
+from ..classes.Client import Client
+from ..classes.Package import Package
+from ..classes.Shipment import Shipment
 class TestShipment(unittest.TestCase):
 
     def setUp(self):

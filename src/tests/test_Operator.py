@@ -6,7 +6,7 @@ class TestOperator(unittest.TestCase):
         """Setup: Crea un operador con atributos de prueba."""
         self.operator = Operator(
             user_token="user123",
-            password_token="pass123",
+            pass_token="pass123",
             client_id=1,
             name="John Doe",
             document="123456789",
