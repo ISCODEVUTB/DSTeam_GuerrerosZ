@@ -1,4 +1,4 @@
-name: Run Tests and SonarQube Analysis
+name: SonarQube Analysis
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  test:
+  sonar:
     runs-on: windows-latest
 
     steps:
@@ -29,38 +29,24 @@ jobs:
 
       # Ejecutar pruebas y generar reporte de cobertura
       - name: Run tests with coverage
-        env:
-          USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
         run: |
-          PYTHONPATH=$PWD pytest --cov=. --cov-report=term --cov-report=xml --cov-report=html
-
-      # Subir el reporte de cobertura como artefacto
+          PYTHONPATH=$PWD pytest --cov=. --cov-report=xml --cov-report=html
+          
+      # Subir el reporte de cobertura como artefacto en GitHub Actions
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
           path: htmlcov
 
-      # Subir cobertura a Codecov (Opcional)
-      - name: Upload to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: coverage.xml
-          fail_ci_if_error: true
-          verbose: true
-
-      # Analizar con SonarQube
+      # Ejecutar SonarQube Scanner
       - name: Run SonarQube Scanner
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          curl -sSLo sonar-scanner-cli.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
-          unzip sonar-scanner-cli.zip
-          sudo mv sonar-scanner-4.6.2.2472-linux /opt/sonar-scanner
           /opt/sonar-scanner/bin/sonar-scanner \
-            -Dsonar.projectKey=TU_PROYECTO \
+            -Dsonar.projectKey=ISCODEVUTB_DSTeam_GuerrerosZ \
             -Dsonar.sources=. \
-            -Dsonar.host.url=https://TU_SONARQUBE_URL \
+            -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
             -Dsonar.coverageReportPaths=coverage.xml
