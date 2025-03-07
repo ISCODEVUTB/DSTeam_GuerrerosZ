@@ -1,4 +1,4 @@
-from Person import Person
+from src.classes.Person import Person
 
 class Client(Person):
     """

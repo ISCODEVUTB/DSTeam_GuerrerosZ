@@ -1,5 +1,5 @@
-from Client import Client
-from Package import Package
+from src.classes.Client import Client
+from src.classes.Package import Package
 from typing import List
 class Shipment:
     """

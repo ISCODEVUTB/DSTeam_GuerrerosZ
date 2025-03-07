@@ -1,4 +1,4 @@
-from Paymentmethod import PaymentMethod
+from src.classes.Paymentmethod import PaymentMethod
 class CardPayment(PaymentMethod):
     """
     Represents a payment made with a credit card.

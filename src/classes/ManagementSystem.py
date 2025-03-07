@@ -1,7 +1,7 @@
-from Client import Client
-from Package import Package
-from Shipment import Shipment
-from Invoice import Invoice
+from src.classes.Client import Client
+from src.classes.Package import Package
+from src.classes.Shipment import Shipment
+from src.classes.Invoice import Invoice
 from typing import List, Optional
 class ManagementSystem:
     """

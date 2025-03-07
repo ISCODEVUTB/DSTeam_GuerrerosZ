@@ -1,4 +1,4 @@
-import PackageClassifier
+from src.classes.PackageClassifier import PackageClassifier
 
 class Package:
     """
