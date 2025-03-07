@@ -1,4 +1,4 @@
-import classes
+from classes import *
 import re
 from typing import Optional, List
 
