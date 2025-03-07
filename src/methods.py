@@ -1,11 +1,11 @@
-from classes import *
+from classes import Client, Package, Shipment, Invoice, PaymentMethod, CardPayment, PayPalPayment, CashPayment, ManagementSystem
 import re
 from typing import Optional, List
 
 class Terminal:
     def __init__(self):
         """Initializes the terminal with a management system and operator credentials."""
-        self.__management_system = classes.ManagementSystem()
+        self.__management_system = ManagementSystem.ManagementSystem()
         self.__operator_credentials_set = [("operator1", "12345")]
 
     def show_main_message(self):
@@ -16,15 +16,15 @@ class Terminal:
         """Verifies if the entered credentials correspond to a registered operator."""
         return (user_token, password_token) in self.__operator_credentials_set
 
-    def request_sender_info(self) -> classes.Client:
+    def request_sender_info(self) -> Client.Client:
         """Requests and returns the sender's information."""
         return self.__request_client_info("sender")
 
-    def request_recipient_info(self) -> classes.Client:
+    def request_recipient_info(self) -> Client.Client:
         """Requests and returns the recipient's information."""
         return self.__request_client_info("recipient")
 
-    def __request_client_info(self, type: str) -> classes.Client:
+    def __request_client_info(self, type: str) -> Client.Client:
         """Requests the information of a client (sender or recipient) with data validation."""
         print(f"\n Enter the {type}'s data:")
 
@@ -64,9 +64,9 @@ class Terminal:
         email = validate_text("Enter email: ")
         address = validate_text("Enter address: ")
 
-        return classes.Client(client_id, name, document, phone, email, address, document_type)
+        return Client.Client(client_id, name, document, phone, email, address, document_type)
 
-    def request_package_info(self, n: int, package_id: int) -> List[classes.Package]:
+    def request_package_info(self, n: int, package_id: int) -> List[Package.Package]:
         """Requests the information of 'n' packages and returns them in a list of Package objects."""
         packages = []
 
@@ -91,7 +91,7 @@ class Terminal:
             dimensions = f"{length},{width},{height}"
             observations = input("Enter package observations (optional): ").strip()
 
-            package = classes.Package(package_id, dimensions, weight, observations)
+            package = Package.Package(package_id, dimensions, weight, observations)
             packages.append(package)
 
         print(f"\n {n} packages have been registered successfully.")
@@ -153,12 +153,12 @@ class Terminal:
             payment_result = payment_method.process_payment(sum(e._Shipment__total_cost for e in self.__management_system.shipments if e._Shipment__shipment_id in shipment_ids))
             print(f"{payment_result}")
 
-def select_payment_method(self) -> Optional[classes.PaymentMethod]:
+def select_payment_method(self) -> Optional[PaymentMethod.PaymentMethod]:
     """Allows the user to choose a payment method."""
     payment_options = {
-        "1": classes.CardPayment(),
-        "2": classes.PayPalPayment(),
-        "3": classes.CashPayment()
+        "1": CardPayments.CardPayment(),
+        "2": PayPalPayment.PayPalPayment(),
+        "3": CashPayment.CashPayment()
     }
 
     print("\n Available Payment Methods:")
