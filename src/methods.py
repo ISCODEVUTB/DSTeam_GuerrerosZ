@@ -1,11 +1,20 @@
-from src.classes import Client, Package, Shipment, Invoice, Paymentmethod, CardPayment, PayPalPayment, CashPayment, ManagementSystem,PackageClassifier
+from src.client import Client
+from src.package import Package
+from src.shipment import Shipment
+from src.invoice import Invoice
+from src.paymentmethod import PaymentMethod
+from src.cardpayment import CardPayment
+from src.paypalpayment import PayPalPayment
+from src.cashpayment import CashPayment
+from src.managementSystem import ManagementSystem
+from src.packageclassifier import PackageClassifier
 import re
 from typing import Optional, List
 
 class Terminal:
     def __init__(self):
         """Initializes the terminal with a management system and operator credentials."""
-        self.__management_system = ManagementSystem.ManagementSystem()
+        self.__management_system = ManagementSystem()
         self.__operator_credentials_set = [("operator1", "12345")]
 
     def show_main_message(self):
@@ -153,7 +162,7 @@ class Terminal:
             payment_result = payment_method.process_payment(total_cost)
             print(f"{payment_result}")
 
-    def select_payment_method(self) -> Optional[Paymentmethod]:
+    def select_payment_method(self) -> Optional[PaymentMethod]:
         """Allows the user to choose a payment method."""
         payment_options = {
             "1": CardPayment(),
@@ -173,7 +182,7 @@ class Terminal:
     def search_and_filter(self):
         """Allows searching and filtering clients, shipments, or packages in the system."""
         print("\n Search options:")
-        print("1. Search Client")
+        print("1. Search client")
         print("2. Search Shipment")
         print("3. Search Package")
 
