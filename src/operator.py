@@ -16,7 +16,7 @@ class Operator(Person):
         """
         Validates that the operator's address is not empty.
         """
-        return bool(self.__address.strip())
+        return bool(self.address.strip())
 
     def get_information(self) -> str:
         """
