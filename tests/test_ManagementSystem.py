@@ -70,7 +70,7 @@ class TestManagementSystem(unittest.TestCase):
     def test_create_shipment(self):
         """Prueba la creación de un envío."""
         self.system.add_package(self.mock_package1)
-        self.system.create_shipment(201, self.mock_sender, self.mock_recipient, [101])
+        self.system.create_shipment(201, self.mock_sender, self.mock_recipient, [101], "Handle with care")
         self.assertEqual(len(self.system.shipments), 1)
 
     def test_track_shipment(self):
