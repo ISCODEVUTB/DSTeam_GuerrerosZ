@@ -1,5 +1,6 @@
 # Usa una imagen ligera de Python
 FROM python:3.10-slim
+FROM --platform=linux/amd64 python:3.10-slim
 
 # Establecer el directorio de trabajo en el contenedor
 WORKDIR /app
