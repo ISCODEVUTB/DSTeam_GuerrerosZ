@@ -1,9 +1,8 @@
 import unittest
 import sys
 import os
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 from typing import List
-from unittest.mock import patch
 
 # Agregar 'src' al sys.path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
@@ -36,10 +35,12 @@ class TestManagementSystem(unittest.TestCase):
         self.mock_shipment = Mock(spec=Shipment)
         self.mock_shipment.shipment_id = 201
         self.mock_shipment.track_shipment.return_value = ["In transit", "Delivered"]
+        self.mock_shipment.shipping_cost = 50  # Se agrega shipping_cost
 
         # Simular Factura
         self.mock_invoice = Mock(spec=Invoice)
         self.mock_invoice.invoice_id = 301
+        self.mock_invoice.total_cost = 100  # Se agrega total_cost
         self.mock_invoice.generate_invoice.return_value = "Invoice 301 generated for 100 USD"
 
     def test_register_client(self):
@@ -65,7 +66,7 @@ class TestManagementSystem(unittest.TestCase):
         self.system.add_package(self.mock_package1)
         self.mock_package1.approve.return_value = True
         result = self.system.approve_package(101)
-        self.mock_package1.approve.assert_called()  # Cambiado de assert_called_once() a assert_called()
+        self.mock_package1.approve.assert_called()
         self.assertTrue(result)
 
     def test_create_shipment(self):
@@ -86,8 +87,6 @@ class TestManagementSystem(unittest.TestCase):
     def test_generate_invoice(self):
         """Prueba la generación de una factura."""
         self.system.shipments.append(self.mock_shipment)
-        self.mock_invoice.total_cost = 100  # Se agrega el atributo total_cost
-        self.mock_invoice.generate_invoice.return_value = "Invoice 301 generated for 100 USD"
         result = self.system.generate_invoice(301, [201])
         self.assertEqual(result, "Invoice 301 generated for 100 USD")
 
