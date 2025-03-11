@@ -10,33 +10,42 @@ class TestManagementSystem(unittest.TestCase):
     def setUp(self):
         self.system = ManagementSystem()
 
-    @patch("src.managementSystem.Client")
-    def test_add_client(self, MockClient):
+    @patch("src.client.Client")
+    def test_register_client(self, MockClient):
         mock_client = MockClient.return_value
-        self.system.add_client(mock_client)
+        self.system.register_client(mock_client)
         self.assertIn(mock_client, self.system.clients)
 
-    @patch("src.managementSystem.Package")
+    @patch("src.package.Package")
     def test_add_package(self, MockPackage):
         mock_package = MockPackage.return_value
         self.system.add_package(mock_package)
         self.assertIn(mock_package, self.system.packages)
+        mock_package.approve.assert_called_once()  # Verificar que se aprueba el paquete
 
-    @patch("src.managementSystem.Shipment")
+    @patch("src.shipment.Shipment")
     def test_create_shipment(self, MockShipment):
         mock_shipment = MockShipment.return_value
-        sender = Mock()
-        recipient = Mock()
-        packages = [Mock()]
-        self.system.create_shipment(1, sender, recipient, packages, "Test Shipment")
+        sender = Mock(spec=Client)
+        recipient = Mock(spec=Client)
+        recipient.validate.return_value = True  # Simular validación exitosa
+        package = Mock(spec=Package)
+        package.package_id = 1
+        package.approved = True  # Simular aprobación de paquete
+        self.system.packages.append(package)
+
+        self.system.create_shipment(1, sender, recipient, [1], "Test Shipment")
         self.assertIn(mock_shipment, self.system.shipments)
 
-    @patch("src.managementSystem.Invoice")
+    @patch("src.invoice.Invoice")
     def test_generate_invoice(self, MockInvoice):
         mock_invoice = MockInvoice.return_value
-        shipments = [Mock()]
-        invoice = self.system.generate_invoice(1, shipments)
-        self.assertEqual(invoice, mock_invoice)
+        shipment = Mock(spec=Shipment)
+        shipment.shipment_id = 1
+        self.system.shipments.append(shipment)  # Asegurar que hay un envío
+
+        result = self.system.generate_invoice(1, [1])
+        self.assertEqual(result, mock_invoice.generate_invoice.return_value)
         self.assertIn(mock_invoice, self.system.invoices)
 
 if __name__ == "__main__":
