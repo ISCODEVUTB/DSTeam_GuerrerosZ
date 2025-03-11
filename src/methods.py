@@ -116,7 +116,6 @@ class Terminal:
         # Register clients and add packages
         self.__management_system.register_client(sender)
         self.__management_system.register_client(recipient)
-
         for package in package_list:
             self.__management_system.add_package(package)
 
@@ -125,7 +124,6 @@ class Terminal:
         # Generate a new unique shipment ID
         new_shipment_id = len(self.__management_system.shipments) + 1
         shipment = self.__management_system.create_shipment(new_shipment_id, sender, recipient, [p.package_id for p in package_list], observation)
-
         print("\n Shipment created successfully.")
         return shipment
 

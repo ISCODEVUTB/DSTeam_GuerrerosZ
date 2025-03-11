@@ -17,6 +17,7 @@ class ManagementSystem:
         self.clients.append(client)
 
     def add_package(self, package: Package):
+        package.approve()
         self.packages.append(package)
 
     def update_package(self, package_id: int, dimensions: str, weight: float, observations: str):
