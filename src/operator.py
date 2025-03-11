@@ -22,7 +22,7 @@ class Operator(Person):
         """
         Returns the operator's information.
         """
-        return (f"ID: {self.person_id}\n-Document Type: {self.document_type}"
-                f"\n-Document: {self.document}\n-Name: {self.name}"
-                f"\n-Phone {self.phone}\n-Email: {self.email}"
+        return (f"ID: {self._person_id}\n-Document Type: {self._document_type}"
+                f"\n-Document: {self._document}\n-Name: {self._name}"
+                f"\n-Phone {self._phone}\n-Email: {self._email}"
                 f"\n-Address{self.address}.")

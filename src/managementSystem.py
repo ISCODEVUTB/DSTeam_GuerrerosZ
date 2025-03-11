@@ -36,6 +36,9 @@ class ManagementSystem:
 
     def create_shipment(self, shipment_id: int, sender: Client, recipient: Client, packages: List[int],observation: str):
         selected_packages = [p for p in self.packages if p.package_id in packages]
+        for package in selected_packages:
+            approval = input(f"Approve package {package.package_id}? (yes/no): ").strip().lower()
+            package.approved = approval == "yes"
         shipment = Shipment(shipment_id, sender, recipient, selected_packages, observation)
         self.shipments.append(shipment)
 

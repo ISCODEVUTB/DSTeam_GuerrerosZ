@@ -12,9 +12,8 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copiar el código fuente
-COPY app.py 
-COPY cls/ ./clases/
-COPY cls/ ./metodos/
+copy app.py
+copy src/
 
 
 # Cambia al usuario no-root

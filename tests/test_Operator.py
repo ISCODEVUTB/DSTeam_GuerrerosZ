@@ -1,12 +1,12 @@
 import unittest
 from src.operator import Operator
-
+import os
 class TestOperator(unittest.TestCase):
     def setUp(self):
         """Setup: Crea un operador con atributos de prueba."""
         self.operator = Operator(
-            user_token="user123",
-            pass_token="pass123",
+            user_token=os.getenv("user123"),
+            password_token=os.getenv("pass123"),
             client_id=1,
             name="John Doe",
             document="123456789",
