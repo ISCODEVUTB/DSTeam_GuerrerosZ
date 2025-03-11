@@ -29,7 +29,7 @@ class PackageClassifier:
         base_rates = {
             "basic": 5.0,
             "standard": 7.5,  
-            "oversized": 10.0  
+            "oversized": 17.0  
         }
         
         if package_type not in base_rates:
