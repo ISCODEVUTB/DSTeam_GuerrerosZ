@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import Mock, patch
-from src import Operator
+from src.operator import Operator
 class TestOperator(unittest.TestCase):
     
     def setUp(self):
