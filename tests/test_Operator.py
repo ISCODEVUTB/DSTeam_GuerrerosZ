@@ -7,10 +7,22 @@ class TestOperator(unittest.TestCase):
         self.mock_package1 = Mock()
         self.mock_package2 = Mock()
         self.mock_shipment = Mock()
-        self.mock_shipment.total_cost = 50.0  # Asegurar que tiene este atributo
+        self.mock_shipment.total_cost = 50.0
         self.mock_sender = Mock()
         self.mock_recipient = Mock()
-        self.system = Operator()
+        
+        # Instancia de Operator con valores de prueba
+        self.system = Operator(
+            user_token="test_token",
+            password_token="test_password",
+            client_id="test_client",
+            name="Test Operator",
+            document="123456789",
+            phone="555-1234",
+            email="test@example.com",
+            address="123 Test St",
+            document_type="ID"
+        )
     
     def test_approve_package(self):
         self.mock_package1.approve.reset_mock()
