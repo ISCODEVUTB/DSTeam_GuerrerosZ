@@ -1,26 +1,25 @@
 # Usar una imagen oficial de Python
 FROM python:3.10-slim
 
-# Crea un usuario no-root (por ejemplo, "appuser")
+# Crear un usuario no-root
 RUN adduser --disabled-password --gecos '' appuser
 
 # Establecer el directorio de trabajo
 WORKDIR /app
 
-# Copiar y instalar dependencias
+# Copiar y instalar dependencias antes para aprovechar la caché
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN python -m pip install --no-cache-dir -r requirements.txt
 
-# Copiar el código fuente
-copy app.py
-copy src/ ./src/
+# Copiar el código fuente (corrigiendo los errores)
+COPY app.py ./
+COPY src/ ./src/ 
 
-
-# Cambia al usuario no-root
+# Cambiar al usuario no-root
 USER appuser
 
-# Exponer el puerto 5000 (ajústalo si usas otro)
+# Exponer el puerto 5000
 EXPOSE 5000
 
-# Definir el comando de inicio (ajústalo si es necesario)
+# Comando de inicio
 CMD ["python", "app.py"]
