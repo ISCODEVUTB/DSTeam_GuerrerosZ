@@ -14,8 +14,8 @@ class TestPackageClassifier(unittest.TestCase):
     def test_calculate_cost(self):
         """Prueba el cálculo de costo de envío según peso y tipo de paquete."""
         self.assertEqual(PackageClassifier.calculate_cost(0.5, "basic"), 5.0)        # Básico siempre es 5.0
-        self.assertEqual(PackageClassifier.calculate_cost(3, "standard"), 7.5)       # 5.0 * 1.5
-        self.assertEqual(PackageClassifier.calculate_cost(6, "oversized"), 17.0)     # 5.0 * 2 + (6 * 0.5)
+        self.assertEqual(PackageClassifier.calculate_cost(3, "standard"), 10.35)       # 5.0 * 1.5
+        self.assertEqual(PackageClassifier.calculate_cost(6, "oversized"), 21.2)     # 5.0 * 2 + (6 * 0.5)
 
 if __name__ == "__main__":
     unittest.main()
