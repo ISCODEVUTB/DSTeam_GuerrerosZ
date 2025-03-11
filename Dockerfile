@@ -1,5 +1,5 @@
 # Usar una imagen oficial de Python
-FROM python:3.10-slim
+FROM python:3.9-slim
 
 # Crear un usuario no-root
 RUN adduser --disabled-password --gecos '' appuser
