@@ -137,7 +137,7 @@ class Terminal:
 
         print("\n Shipments available for invoicing:")
         for shipment in self.__management_system.shipments:
-            print(f"ID: {shipment.shipment_id}, Sender: {shipment.sender.name}, Total: {shipment.total_cost} USD")
+            print(f"ID: {shipment.shipment_id}, Sender: {shipment.sender._name}, Total: {shipment.total_cost} USD")
 
         shipment_ids = input("Enter the IDs of the shipments to invoice (separated by commas): ").strip()
         shipment_ids = [int(id.strip()) for id in shipment_ids.split(",") if id.strip().isdigit()]
@@ -203,13 +203,13 @@ class Terminal:
 
         found_clients = [
             c for c in self.__management_system.clients
-            if criteria in c.name.lower() or criteria in c.document
+            if criteria in c._name.lower() or criteria in c._document
         ]
 
         if found_clients:
             print("\n Found clients:")
             for c in found_clients:
-                print(f"ID: {c.person_id}, Name: {c.name}, Document: {c.document}")
+                print(f"ID: {c._person_id}, Name: {c._name}, Document: {c._document}")
         else:
             print(" No clients found with that criteria.")
 
@@ -225,6 +225,6 @@ class Terminal:
         if found_shipments:
             print("\n Found shipments:")
             for e in found_shipments:
-                print(f"ID: {e.shipment_id}, Sender: {e.sender.name}, Status: {', '.join(e.tracking)}")
+                print(f"ID: {e.shipment_id}, Sender: {e.sender._name}, Status: {', '.join(e.tracking)}")
         else:
             print(" No shipments found with that criteria.")
