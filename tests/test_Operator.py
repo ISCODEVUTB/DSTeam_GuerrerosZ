@@ -10,7 +10,7 @@ class TestShippingSystem(unittest.TestCase):
         self.mock_shipment.total_cost = 50.0  # Asegurar que tiene este atributo
         self.mock_sender = Mock()
         self.mock_recipient = Mock()
-        self.system = ShippingSystem()
+        self.system = shippingsystem()
     
     def test_approve_package(self):
         self.mock_package1.approve.reset_mock()
@@ -34,7 +34,7 @@ class TestShippingSystem(unittest.TestCase):
         operator = Operator("John Doe", "123456789", "ID")
         self.assertTrue(operator.validate())
     
-    @patch.object(ShippingSystem, 'calculate_cost')
+    @patch.object(shippingsystem, 'calculate_cost')
     def test_update_info(self, mock_calculate_cost):
         mock_calculate_cost.return_value = 10.0
         self.system.update_info(self.mock_shipment)
