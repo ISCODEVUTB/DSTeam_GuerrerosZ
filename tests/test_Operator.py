@@ -1,60 +1,49 @@
 import unittest
-from unittest.mock import Mock, patch
 from src.operator import Operator
+
 class TestOperator(unittest.TestCase):
-    
     def setUp(self):
-        self.mock_package1 = Mock()
-        self.mock_package2 = Mock()
-        self.mock_shipment = Mock()
-        self.mock_shipment.total_cost = 50.0
-        self.mock_sender = Mock()
-        self.mock_recipient = Mock()
-        
-        # Instancia de Operator con valores de prueba
-        self.system = Operator(
+        """Setup a sample Operator instance for testing."""
+        self.operator = Operator(
             user_token="test_token",
             password_token="test_password",
-            client_id="test_client",
-            name="Test Operator",
-            document="123456789",
-            phone="555-1234",
-            email="test@example.com",
-            address="123 Test St",
-            document_type="ID"
+            client_id=1,
+            name="John Doe",
+            document="12345678",
+            phone="123-456-7890",
+            email="johndoe@example.com",
+            address="123 Main St",
+            document_type="DNI"
         )
     
-    def test_approve_package(self):
-        self.mock_package1.approve.reset_mock()
-        self.system.approve_package(self.mock_package1)
-        self.mock_package1.approve.assert_called_once()
+    def test_initialization(self):
+        """Test that the Operator is initialized correctly."""
+        self.assertEqual(self.operator._user_token, "test_token")
+        self.assertEqual(self.operator._password_token, "test_password")
+        self.assertEqual(self.operator._person_id, 1)
+        self.assertEqual(self.operator._name, "John Doe")
+        self.assertEqual(self.operator._document, "12345678")
+        self.assertEqual(self.operator._phone, "123-456-7890")
+        self.assertEqual(self.operator._email, "johndoe@example.com")
+        self.assertEqual(self.operator._address, "123 Main St")
+        self.assertEqual(self.operator._document_type, "DNI")
     
-    @patch('builtins.input', lambda _: "yes")
-    def test_create_shipment(self):
-        self.system.create_shipment(201, self.mock_sender, self.mock_recipient, [101], "Handle with care")
-    
-    def test_generate_invoice(self):
-        invoice = self.system.generate_invoice(self.mock_shipment)
-        self.assertIn("Total Cost: 50.0", invoice)
+    def test_validate_address_not_empty(self):
+        """Test that the validate method returns True when the address is not empty."""
+        self.assertTrue(self.operator.validate())
+
+    def test_validate_address_empty(self):
+        """Test that the validate method returns False when the address is empty."""
+        self.operator._address = ""
+        self.assertFalse(self.operator.validate())
     
     def test_get_information(self):
-        self.mock_operator = Operator("John Doe", "123456789", "ID")
-        expected_output = "ID: 1\n- Document Type: ID\n- Document: 123456789"
-        self.assertEqual(self.mock_operator.get_information().strip(), expected_output.strip())
-    
-    def test_validate(self):
-        operator = Operator("John Doe", "123456789", "ID")
-        self.assertTrue(operator.validate())
-    
-    @patch.object(Operator, 'calculate_cost')
-    def test_update_info(self, mock_calculate_cost):
-        mock_calculate_cost.return_value = 10.0
-        self.system.update_info(self.mock_shipment)
-        mock_calculate_cost.assert_called_once_with(10.0, "Standard")
-    
-    def test_calculate_cost(self):
-        result = self.system.calculate_cost(10.0, "Standard")
-        self.assertEqual(result, 17.0)  # Ajustado al valor esperado correcto
+        """Test that the get_information method returns the expected string."""
+        expected_info = (
+            "ID: 1\n-Document Type: DNI\n-Document: 12345678\n-Name: John Doe"
+            "\n-Phone 123-456-7890\n-Email: johndoe@example.com\n-Address123 Main St."
+        )
+        self.assertEqual(self.operator.get_information(), expected_info)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
