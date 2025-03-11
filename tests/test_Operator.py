@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import Mock, patch
-from src import Operator
+from src import operator
 class TestShippingSystem(unittest.TestCase):
     
     def setUp(self):
