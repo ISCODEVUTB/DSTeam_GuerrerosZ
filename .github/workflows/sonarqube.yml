@@ -39,6 +39,14 @@ jobs:
           name: coverage-report
           path: htmlcov
 
+
+      - name: Install SonarScanner
+        run: |
+          curl -L -o sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip
+          unzip sonar-scanner.zip
+          mv sonar-scanner-4.8.0.2856-linux /opt/sonar-scanner
+          echo "/opt/sonar-scanner/bin" >> $GITHUB_PATH
+          
       # Ejecutar SonarQube Scanner
       - name: Run SonarQube Scanner
         env:
