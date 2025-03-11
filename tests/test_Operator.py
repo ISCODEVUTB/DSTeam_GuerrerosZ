@@ -25,7 +25,7 @@ class TestOperator(unittest.TestCase):
         self.assertEqual(self.operator._document, "12345678")
         self.assertEqual(self.operator._phone, "123-456-7890")
         self.assertEqual(self.operator._email, "johndoe@example.com")
-        self.assertEqual(self.operator._address, "123 Main St")
+        self.assertEqual(self.operator.address, "123 Main St")
         self.assertEqual(self.operator._document_type, "DNI")
     
     def test_validate_address_not_empty(self):
@@ -34,7 +34,7 @@ class TestOperator(unittest.TestCase):
 
     def test_validate_address_empty(self):
         """Test that the validate method returns False when the address is empty."""
-        self.operator._address = ""
+        self.operator.address = ""
         self.assertFalse(self.operator.validate())
     
     def test_get_information(self):
