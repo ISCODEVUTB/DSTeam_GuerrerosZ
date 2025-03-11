@@ -36,13 +36,17 @@ class TestManagementSystem(unittest.TestCase):
 
         # Verificamos que el envío real esté en el sistema
         self.assertTrue(any(s.shipment_id == 1 for s in self.system.shipments))
-
     def test_generate_invoice(self):
+        # Creamos un paquete y lo aprobamos
+        package = Package(1, "10x10x10", 5.0, "Test Package")
+        package.approve()  # ¡Importante! Aprobamos el paquete antes de usarlo.
+
+        # Creamos el envío con paquetes aprobados
         shipment = Shipment(
             shipment_id=1,
             sender=Client(1, "Alice", "12345678", "555-1234", "alice@example.com", "123 Main St", "DNI"),
             recipient=Client(2, "Bob", "87654321", "555-5678", "bob@example.com", "456 Elm St", "DNI"),
-            packages=[Package(1, "10x10x10", 5.0, "Test Package")],
+            packages=[package],  # Se usa el paquete aprobado
             observation="Test Invoice"
         )
 
@@ -50,9 +54,9 @@ class TestManagementSystem(unittest.TestCase):
         result = self.system.generate_invoice(1, [1])
 
         expected_invoice_text = f"Invoice 1 generated for {shipment.total_cost} USD"
-        self.assertEqual(result, expected_invoice_text)  # Comparamos con el resultado real
+        self.assertEqual(result, expected_invoice_text)  # Comparamos con el resultado esperado
 
-        # Verificamos que la factura generada se encuentre en el sistema
+        # Verificamos que la factura se haya guardado en el sistema
         self.assertTrue(any(i.invoice_id == 1 for i in self.system.invoices))
 
 if __name__ == "__main__":
