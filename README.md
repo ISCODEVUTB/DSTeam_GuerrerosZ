@@ -256,7 +256,7 @@ Represents the main interface of the package management system.
 ---
 
 ## Team
-* Mario Alberto Julio Wilches.
-* Andrés Felipe Rubiano Marrugo.
-* Alejandro Pedro Steinman Cuesta.
-* Amaury Enrique Bula Salas.
+* Mario Alberto Julio Wilches- _Code quality_
+* Andrés Felipe Rubiano Marrugo-_CL/CD_
+* Alejandro Pedro Steinman Cuesta-_Desarrollador_
+* Amaury Enrique Bula Salas- _CI/CD_
