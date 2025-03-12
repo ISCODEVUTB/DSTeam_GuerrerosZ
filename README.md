@@ -43,7 +43,7 @@ This archive has to have the following libraries:
     SQLAlchemy==1.3.23            # Object-relational mapper (ORM) for databases  
     Werkzeug==1.0.1               # WSGI utility library for Flask  
     ```
-Para ejecutar el sistema usaremos:
+For executing the application we will use:
 
     ```
     python app.py
@@ -54,8 +54,6 @@ Para ejecutar el sistema usaremos:
 The development environment is configured through our `Dockerfile`, designed for use on Linux enviroment. It defines dependencies, configurations, and setup commands, ensuring a consistent and reproducible deployment. 
 
 ## Classes descriptions and funtions
-
-To familiarice with the development, we are going to describe his most important classes, those who are directly relationated with the main caracteristics of the managements.
 
 ### 1. `Validable(ABC)` Class  
 
@@ -69,7 +67,7 @@ The `Person` class is responsible for initializing the common attributes of a pe
 
 - **`get_information(self) -> str`**: This method returns the person's information as a formatted string.
 
-### 4. `Operator(Person)` Class  
+### 3. `Operator(Person)` Class  
 
 The `Operator` class represents an operator who has authentication credentials and inherits from the `Person` class.  
 
@@ -187,7 +185,7 @@ The `ManagementSystem` class is responsible for managing clients, packages, ship
 
 ### 14. **`Terminal` Class**  
 
-The `Terminal` class represents the main interface of the shipment management system.  
+The `Terminal` class represents the main interface of the package management system.  
 It allows operator authentication, client, package, and shipment management, as well as invoicing and payment processing.  
 
 ---
@@ -264,4 +262,8 @@ It allows operator authentication, client, package, and shipment management, as 
 
 ---
 
-
+## Team
+* Mario Alberto Julio Wilches.
+* Andrés Felipe Rubiano Marrugo.
+* Alejandro Pedro Steinman Cuesta.
+* Amaury Enrique Bula Salas.
