@@ -19,7 +19,7 @@ For the proper implementation of this development, you need to install the requi
     pip install -r requirements.tx
     ```
     
-    This archive has to have the following libraries: 
+This archive has to have the following libraries: 
     
     ```
     alembic==1.5.5                # Database migrations for SQLAlchemy  
@@ -43,7 +43,12 @@ For the proper implementation of this development, you need to install the requi
     SQLAlchemy==1.3.23            # Object-relational mapper (ORM) for databases  
     Werkzeug==1.0.1               # WSGI utility library for Flask  
     ```
+Para ejecutar el sistema usaremos:
 
+    ```
+    python app.py
+    ```
+    
 ### **Docker**
 
 The development environment is configured through our `Dockerfile`, designed for use on Linux enviroment. It defines dependencies, configurations, and setup commands, ensuring a consistent and reproducible deployment. 
