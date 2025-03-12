@@ -1,26 +1,27 @@
 # Package management system (DSTeam_guerrerosZ)
 
-## Description 
+## Description
 
 The **Package management system (DSTeam_guerrerosZ)** development is a Python-based package management system designed to comprehensively handle shipments at local, national, and international levels, offering scalable solutions. Built on Object-Oriented Programming, it provides key functionalities such as package management (insertion, classification, deletion, and updating), shipment management (tracking and traceability), and user management (authentication, billing, and payment processing).
 
 ## Project Status
+
 The project is currently complete, featuring a functional Docker setup and utilizing SonarQube for code coverage and quality analysis.
 
 ## Installation  
 
-The **Package Management System (DSTeam_guerrerosZ)** requires Python 3.10 or later. 
+The **Package Management System (DSTeam_guerrerosZ)** requires Python 3.10 or later.
 
 ### **Implementation**
-   
+
 For the proper implementation of this development, you need to install the required dependencies listed in the requirements.txt file by running the following command:
-    
+
     ```
     pip install -r requirements.tx
     ```
     
-This archive has to have the following libraries: 
-    
+This archive has to have the following libraries:
+
     ```
     alembic==1.5.5                # Database migrations for SQLAlchemy  
     aniso8601==9.0.0              # Date and time parsing  
@@ -51,20 +52,23 @@ For executing the application we will use:
     
 ### **Docker**
 
-The development environment is configured through our `Dockerfile`, designed for use on Linux enviroment. It defines dependencies, configurations, and setup commands, ensuring a consistent and reproducible deployment. 
+The development environment is configured through our `Dockerfile`, designed for use on Linux enviroment. It defines dependencies, configurations, and setup commands, ensuring a consistent and reproducible deployment.
 
 ## Classes descriptions and funtions
 
-## **1. Base and Validation Classes**  
+## **1. Base and Validation Classes**
+
 These classes provide core functionalities such as validation and structure for other classes.  
 
 ### **`Validable(ABC)`** class
+
 The `Validable` class is responsible for verifying whether request parameters are correct.  
 
 - **`Validate(self) -> bool`**  
   Returns `true` if the parameters meet the required conditions, otherwise `false`.  
 
 ### **`Person(ABC)`**  class
+
 The `Person` class initializes common attributes for a person, such as ID, name, document type, phone, email, and address.  
 
 - **`get_information(self) -> str`**  
@@ -72,16 +76,19 @@ The `Person` class initializes common attributes for a person, such as ID, name,
 
 ---
 
-## **2. User and Authentication Classes**  
+## **2. User and Authentication Classes**
+
 These classes represent individuals interacting with the system.  
 
-### **`Operator(Person)`** class  
+### **`Operator(Person)`** class
+
 The `Operator` class represents an operator with authentication credentials.  
 
 - **`__init__(self, user_token: str, password_token: str, client_id: int, name: str, document: str, phone: str, email: str, address: str, document_type: str) -> None`**  
   Initializes an operator’s attributes, including authentication credentials (`user_token`, `password_token`), while inheriting personal details from `Person`.  
 
-### **`Client(Person, Validable)`** class
+### **`Client(Person, Validable)`**
+
 The `Client` class represents a client, inheriting from `Person` and `Validable`.  
 
 - **`__init__(self, client_id: int, name: str, document: str, phone: str, email: str, address: str, document_type: str) -> None`**  
@@ -89,10 +96,12 @@ The `Client` class represents a client, inheriting from `Person` and `Validable`
 
 ---
 
-## **3. Package Management Classes**  
+## **3. Package Management Classes**
+
 These classes handle package classification, validation, and storage.  
 
 ### **`PackageClassifier`**  class
+
 Provides methods for package classification and cost calculation.  
 
 - **`classify(weight: float) -> Literal["basic", "standard", "oversized"]`**  
@@ -107,7 +116,8 @@ Provides methods for package classification and cost calculation.
   - `"standard"`: $7.50 + additional weight-based cost  
   - `"oversized"`: $17.00 + additional weight-based cost  
 
-### **`Package`** class  
+### **`Package`** class
+
 Represents a package with attributes like dimensions, weight, type, approval status, and cost.  
 
 - **`__init__(self, package_id: int, dimensions: str, weight: float, observations: str) -> None`**  
@@ -121,10 +131,12 @@ Represents a package with attributes like dimensions, weight, type, approval sta
 
 ---
 
-## **4. Shipment Management Classes**  
+## **4. Shipment Management Classes**
+
 These classes handle shipment tracking, updates, and management.  
 
-### **`Shipment`** class 
+### **`Shipment`** class
+
 Represents a shipment containing sender, recipient, and package information.  
 
 - **`__init__(self, shipment_id: int, sender: Client, recipient: Client, packages: List[Package], observation: str) -> None`**  
@@ -141,34 +153,40 @@ Represents a shipment containing sender, recipient, and package information.
 
 ---
 
-## **5. Payment and Invoice Management Classes**  
+## **5. Payment and Invoice Management Classes**
+
 These classes handle different payment methods and invoice generation.  
 
-### **`PaymentMethod(ABC)`** class  
+### **`PaymentMethod(ABC)`** class
+
 Abstract class defining the structure for payment methods.  
 
 - **`process_payment(self, amount: float) -> str`**  
   Must be implemented by subclasses to process a payment and return a confirmation message.  
 
-### **`PayPalPayment(PaymentMethod)`** class 
+### **`PayPalPayment(PaymentMethod)`** class
+
 Implements the `PaymentMethod` abstract class for PayPal payments.  
 
 - **`process_payment(self, amount: float) -> str`**  
   Processes a PayPal payment and returns a confirmation message.  
 
-### **`CashPayment(PaymentMethod)`** class 
+### **`CashPayment(PaymentMethod)`** class
+
 Implements `PaymentMethod` for cash payments at a branch.  
 
 - **`process_payment(self, amount: float) -> str`**  
   Processes a cash payment and returns a confirmation message.  
 
 ### **`CardPayment(PaymentMethod)`**  class
+
 Implements `PaymentMethod` for credit card payments.  
 
 - **`process_payment(self, amount: float) -> str`**  
   Processes a credit card payment and returns a confirmation message.  
 
-### **`Invoice`** class  
+### **`Invoice`** class
+
 Represents an invoice generated from one or more shipments.  
 
 - **`generate_invoice(self) -> str`**  
@@ -180,9 +198,11 @@ Represents an invoice generated from one or more shipments.
 ---
 
 ## **6. System Management Classes**  
+
 These classes manage clients, shipments, packages, invoices, and general system operations.  
 
-### **`ManagementSystem`** class 
+### **`ManagementSystem`** class
+
 Handles clients, packages, shipments, and billing.  
 
 - **`register_client(self, client: Client) -> None`**  
@@ -209,12 +229,15 @@ Handles clients, packages, shipments, and billing.
 ---
 
 ## **7. Terminal and User Interface Classes**  
+
 These classes handle interaction between users and the system.  
 
 ### **`Terminal`** class
+
 Represents the main interface of the package management system.  
 
 #### **Authentication**  
+
 - **`show_main_message(self) -> None`**  
   Displays a welcome message.  
 
@@ -222,6 +245,7 @@ Represents the main interface of the package management system.
   Verifies operator credentials.  
 
 #### **Client Management**  
+
 - **`request_sender_info(self) -> Client`**  
   Requests sender's information.  
 
@@ -232,22 +256,27 @@ Represents the main interface of the package management system.
   Private method to request client information.  
 
 #### **Package Management**  
+
 - **`request_package_info(self, n: int, package_id: int) -> List[Package]`**  
   Requests package details and returns a list of packages.  
 
 #### **Shipment Management**  
+
 - **`create_shipment(self) -> str`**  
   Creates a shipment and registers it in the system.  
 
 #### **Invoicing and Payments**  
-- **`create_invoice(self) -> None`**  
+
+- **`create_invoice(self) -> None`**
   Generates an invoice and processes payment.  
 
 - **`select_payment_method(self) -> Optional[PaymentMethod]`**  
   Allows the user to choose a payment method.  
 
 #### **Search and Filtering**  
-- **`search_client(self) -> None`**  
+
+- **`search_client(self) -> None`**
+
   Searches clients by name or document number.  
 
 - **`search_shipment(self) -> None`**  
@@ -256,7 +285,11 @@ Represents the main interface of the package management system.
 ---
 
 ## Team
-* Mario Alberto Julio Wilches- _Code quality_
-* Andrés Felipe Rubiano Marrugo-_CL/CD_
-* Alejandro Pedro Steinman Cuesta-_Developer_
-* Amaury Enrique Bula Salas- _CI/CD_
+
+- Mario Alberto Julio Wilches- _Code quality_
+
+- Andrés Felipe Rubiano Marrugo-_CI/CD_
+
+- Alejandro Pedro Steinman Cuesta-_Developer_
+
+- Amaury Enrique Bula Salas- _CI/CD_
