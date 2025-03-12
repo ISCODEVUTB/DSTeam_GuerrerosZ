@@ -49,12 +49,12 @@ jobs:
           unzip sonar-scanner.zip
           mv sonar-scanner-4.8.0.2856-linux /opt/sonar-scanner
           echo "/opt/sonar-scanner/bin" >> $GITHUB_PATH
-
-      - name: Run SonarQube Scanner
-        env:
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v4
+        env: 
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          /opt/sonar-scanner/bin/sonar-scanner \
+        with:
+          args: >
             -Dsonar.projectKey=ISCODEVUTB_DSTeam_GuerrerosZ \
             -Dsonar.sources=. \
             -Dsonar.host.url=https://sonarcloud.io \
