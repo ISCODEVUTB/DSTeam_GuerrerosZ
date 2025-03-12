@@ -5,7 +5,7 @@ skipsdist = True
 [testenv]
 deps =
     pytest
-    coverage
+    pytest-cov
 commands =
     coverage run -m pytest
     coverage xml
