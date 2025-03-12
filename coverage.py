@@ -7,8 +7,7 @@ deps =
     pytest
     pytest-cov
 commands =
-    coverage run -m pytest
-    coverage xml
+    pytest --cov=src --cov-report=xml --cov-report=html
 
 [coverage:run]
 relative_files = True
