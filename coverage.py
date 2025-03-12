@@ -3,9 +3,9 @@ envlist = py39
 skipsdist = True
 
 [testenv]
-deps =
-    pytest
-    pytest-cov
+deps = [
+    pytest,
+    pytest-cov ]
 commands =
     pytest --cov=src --cov-report=xml --cov-report=html
 
