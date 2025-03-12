@@ -35,5 +35,5 @@ jobs:
           args: >
             -Dsonar.projectKey=ISCODEVUTB_DSTeam_GuerrerosZ
             -Dsonar.organization=deviscoutb
-            -Dsonar.host.url=https://sonarcloud.io
+            -Dsonar.host.url=https:https://sonarcloud.io/project/overview?id=ISCODEVUTB_DSTeam_GuerrerosZ
             -Dsonar.python.coverage.reportPaths=coverage.xml
