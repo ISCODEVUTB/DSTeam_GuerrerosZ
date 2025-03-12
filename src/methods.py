@@ -2,12 +2,12 @@ from src.client import Client
 from src.package import Package
 from src.shipment import Shipment
 from src.invoice import Invoice
-from src.paymentmethod import PaymentMethod
-from src.cardpayment import CardPayment
-from src.paypalpayment import PayPalPayment
-from src.cashpayment import CashPayment
-from src.managementSystem import ManagementSystem
-from src.packageclassifier import PackageClassifier
+from src.payment_method import PaymentMethod
+from src.card_payment import CardPayment
+from src.paypal_payment import PayPalPayment
+from src.cash_payment import CashPayment
+from src.management_system import ManagementSystem
+from src.package_classifier import PackageClassifier
 import re
 from typing import Optional, List
 

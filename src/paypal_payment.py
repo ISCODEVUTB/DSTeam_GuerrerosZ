@@ -1,4 +1,4 @@
-from src.paymentmethod import PaymentMethod
+from src.payment_method import PaymentMethod
 class PayPalPayment(PaymentMethod):
     """
     Represents a payment made with PayPal.

@@ -1,5 +1,5 @@
 import unittest
-from src.cashpayment import CashPayment  # Asegurar que la ruta es correcta
+from src.cash_payment import CashPayment  # Asegurar que la ruta es correcta
 
 class TestCashPayment(unittest.TestCase):
     def setUp(self):

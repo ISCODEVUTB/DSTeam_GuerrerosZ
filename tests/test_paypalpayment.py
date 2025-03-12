@@ -1,8 +1,8 @@
 import unittest
-from src.paymentmethod import PaymentMethod
-from src.cardpayment import CardPayment
-from src.cashpayment import CashPayment
-from src.paypalpayment import PayPalPayment
+from src.payment_method import PaymentMethod
+from src.card_payment import CardPayment
+from src.cash_payment import CashPayment
+from src.paypal_payment import PayPalPayment
 
 class TestPaymentMethods(unittest.TestCase):
 

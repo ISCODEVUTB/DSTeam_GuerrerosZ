@@ -1,5 +1,5 @@
 import unittest
-from src.packageclassifier import PackageClassifier
+from src.package_classifier import PackageClassifier
 
 class TestPackageClassifier(unittest.TestCase):
 

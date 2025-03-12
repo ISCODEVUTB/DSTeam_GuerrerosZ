@@ -1,4 +1,4 @@
-from src.paymentmethod import PaymentMethod
+from src.payment_method import PaymentMethod
 class CashPayment(PaymentMethod):
     """
     Represents a payment made in cash.

@@ -1,5 +1,5 @@
 from src.shipment import Shipment
-from src.paymentmethod import PaymentMethod
+from src.payment_method import PaymentMethod
 from typing import List
 class Invoice:
     """

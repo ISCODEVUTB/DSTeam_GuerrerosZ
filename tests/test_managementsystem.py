@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import Mock, patch
-from src.managementSystem import ManagementSystem
+from src.management_system import ManagementSystem
 from src.client import Client
 from src.package import Package
 from src.shipment import Shipment

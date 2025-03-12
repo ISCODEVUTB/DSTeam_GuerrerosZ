@@ -1,7 +1,7 @@
 import unittest
-from src.paymentmethod import PaymentMethod
-from src.cardpayment import CardPayment
-from src.cashpayment import CashPayment
+from src.payment_method import PaymentMethod
+from src.card_payment import CardPayment
+from src.cash_payment import CashPayment
 
 class TestPaymentMethods(unittest.TestCase):
 

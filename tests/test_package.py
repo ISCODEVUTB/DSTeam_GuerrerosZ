@@ -1,6 +1,6 @@
 import unittest
 from src.package import Package
-from src.packageclassifier import PackageClassifier
+from src.package_classifier import PackageClassifier
 from unittest.mock import patch
 
 class TestPackage(unittest.TestCase):

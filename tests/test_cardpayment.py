@@ -1,6 +1,6 @@
 import unittest
-from src.paymentmethod import PaymentMethod
-from src.cardpayment import CardPayment
+from src.payment_method import PaymentMethod
+from src.card_payment import CardPayment
 
 class TestCardPayment(unittest.TestCase):
     def setUp(self):
