@@ -8,7 +8,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../s
 
 # Importar después de modificar sys.path
 from src.invoice import Invoice
-from src.paymentmethod import PaymentMethod
+from src.payment_method import PaymentMethod
 
 class TestInvoice(unittest.TestCase):
     def setUp(self):
