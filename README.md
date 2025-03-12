@@ -1,21 +1,19 @@
-## Package management system (DSTeam_guerrerosZ)
+# Package management system (DSTeam_guerrerosZ)
 
-# Description 
+## Description 
 
 The **Package management system (DSTeam_guerrerosZ)** development is a Python-based package management system designed to comprehensively handle shipments at local, national, and international levels, offering scalable solutions. Built on Object-Oriented Programming, it provides key functionalities such as package management (insertion, classification, deletion, and updating), shipment management (tracking and traceability), and user management (authentication, billing, and payment processing).
 
-#
-
-# Project Status
+## Project Status
 The project is currently complete, featuring a functional Docker setup and utilizing SonarQube for code coverage and quality analysis.
 
-# Installation  
+## Installation  
 
 The **Package Management System (DSTeam_guerrerosZ)** requires Python 3.10 or later. 
 
-1. **Implementation**
+### **Implementation**
    
-  For the proper implementation of this development, you need to install the required dependencies listed in the requirements.txt file by running the following command:
+For the proper implementation of this development, you need to install the required dependencies listed in the requirements.txt file by running the following command:
     
     ```
     pip install -r requirements.tx
@@ -46,9 +44,8 @@ The **Package Management System (DSTeam_guerrerosZ)** requires Python 3.10 or la
     Werkzeug==1.0.1               # WSGI utility library for Flask  
     ```
 
-  2. **Docker**.
-     
-  The development environment is configured through our `Dockerfile`, designed for use on Linux enviroment. It defines dependencies, configurations, and setup commands, ensuring a consistent and reproducible deployment.
+### **Docker**
 
-4. 
+The development environment is configured through our `Dockerfile`, designed for use on Linux enviroment. It defines dependencies, configurations, and setup commands, ensuring a consistent and reproducible deployment. 
 
+## 
