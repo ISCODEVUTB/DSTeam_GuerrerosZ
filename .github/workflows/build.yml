@@ -29,13 +29,6 @@ jobs:
           pip install pytest pytest-cov
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Set up Python environment
-        run: |
-          python -m venv venv
-          source venv/bin/activate
-          export PYTHONPATH=$PYTHONPATH:$(pwd)
-      - name: Set PYTHONPATH
-        run: echo "PYTHONPATH=src" >> $GITHUB_ENV
       - name: Run tests with coverage
         run: |
           pytest --cov=. --cov-report=xml --cov-report=term
