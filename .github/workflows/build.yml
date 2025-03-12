@@ -29,12 +29,12 @@ jobs:
           pip install pytest pytest-cov
       - name: Run tests with coverage
         run: |
-          PYTHONPATH=$PWD pytest --cov=. --cov-report=xml:coverage.xml --cov-report=html
+          PYTHONPATH=$PWD pytest --cov=. --cov-report=xml:coverage.xml --cov-report=html 
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: htmlcov
+          path: coverage.xml  # Guarda el reporte de cobertura como artefacto
 
       - name: Set up Java
         uses: actions/setup-java@v3
