@@ -29,13 +29,14 @@ jobs:
 
       - name: Run tests with coverage
         run: |
+          export PYTHONPATH=$PYTHONPATH:$(pwd)/src
           pytest --cov=. --cov-report=xml --cov-report=term
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: coverage.xml  # Guarda el reporte de cobertura como artefacto
+          path: coverage.xml
 
       - name: Set up Java
         uses: actions/setup-java@v3
@@ -49,7 +50,6 @@ jobs:
           unzip sonar-scanner.zip
           mv sonar-scanner-4.8.0.2856-linux /opt/sonar-scanner
           echo "/opt/sonar-scanner/bin" >> $GITHUB_PATH
-
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v4
         env: 
