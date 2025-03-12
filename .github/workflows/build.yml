@@ -29,6 +29,12 @@ jobs:
           pip install pytest pytest-cov
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
+      - name: Set up Python environment
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          export PYTHONPATH=$PYTHONPATH:$(pwd)
+
       - name: Run tests with coverage
         run: |
           pytest --cov=. --cov-report=xml --cov-report=term
@@ -38,6 +44,7 @@ jobs:
         with:
           name: coverage-report
           path: coverage.xml  # Guarda el reporte de cobertura como artefacto
+
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v4
         env: 
@@ -45,7 +52,7 @@ jobs:
         with:
           args: >
             -Dsonar.projectKey=ISCODEVUTB_DSTeam_GuerrerosZ \
-            -Dsonar.organization=deviscoutb
+            -Dsonar.organization=deviscoutb \
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
             -Dsonar.coverageReportPaths=coverage.xml
