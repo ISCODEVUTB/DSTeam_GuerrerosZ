@@ -55,205 +55,198 @@ The development environment is configured through our `Dockerfile`, designed for
 
 ## Classes descriptions and funtions
 
-### 1. `Validable(ABC)` Class  
+## **1. Base and Validation Classes**  
+These classes provide core functionalities such as validation and structure for other classes.  
 
-The `Validable` class is responsible for verifying whether the request parameters are correct. It utilizes the `typing` framework (List, Optional) and the `abc` module (ABC, abstractmethod), its method is:
+### **`Validable(ABC)`** class
+The `Validable` class is responsible for verifying whether request parameters are correct.  
 
-- **`Validate(self) -> bool`**: This method returns `true` if the parameters fulfill the required conditions and `false` otherwise.  
+- **`Validate(self) -> bool`**  
+  Returns `true` if the parameters meet the required conditions, otherwise `false`.  
 
-### 2. `Person(ABC)` Class  
+### **`Person(ABC)`**  class
+The `Person` class initializes common attributes for a person, such as ID, name, document type, phone, email, and address.  
 
-The `Person` class is responsible for initializing the common attributes of a person, such as ID, name, document type, phone, email, and address. It uses the `abc` module (ABC, abstractmethod), its method is: 
+- **`get_information(self) -> str`**  
+  Returns the person's information as a formatted string.  
 
-- **`get_information(self) -> str`**: This method returns the person's information as a formatted string.
+---
 
-### 3. `Operator(Person)` Class  
+## **2. User and Authentication Classes**  
+These classes represent individuals interacting with the system.  
 
-The `Operator` class represents an operator who has authentication credentials and inherits from the `Person` class.  
+### **`Operator(Person)`** class  
+The `Operator` class represents an operator with authentication credentials.  
 
-- **`__init__(self, user_token: str, password_token: str, client_id: int, name: str, document: str, phone: str, email: str, address: str, document_type: str) -> None`**:  
-  Initializes the operator’s attributes, including authentication credentials (`user_token` and `password_token`), while inheriting personal details from the `Person` class.  
+- **`__init__(self, user_token: str, password_token: str, client_id: int, name: str, document: str, phone: str, email: str, address: str, document_type: str) -> None`**  
+  Initializes an operator’s attributes, including authentication credentials (`user_token`, `password_token`), while inheriting personal details from `Person`.  
 
+### **`Client(Person, Validable)`** class
+The `Client` class represents a client, inheriting from `Person` and `Validable`.  
 
-### 4. `Client(Person)` Class  
+- **`__init__(self, client_id: int, name: str, document: str, phone: str, email: str, address: str, document_type: str) -> None`**  
+  Initializes a client’s attributes and calls the parent class constructor.  
 
-The `Client` class represents a client and inherits from the `Person` class and from `Validable`. It extends the base functionality by adding validation and retrieval of client-specific information.
+---
 
-- **`__init__(self, client_id: int, name: str, document: str, phone: str, email: str, address: str, document_type: str) -> None`**:  
-  Initializes the client's attributes, calling the parent class constructor.
+## **3. Package Management Classes**  
+These classes handle package classification, validation, and storage.  
 
-### 5. `PackageClassifier` Class  
+### **`PackageClassifier`**  class
+Provides methods for package classification and cost calculation.  
 
-The `PackageClassifier` class provides methods to classify packages based on weight and calculate their shipping costs, its methods are:
-
-- **`classify(weight: float) -> Literal["basic", "standard", "oversized"]`**:  
-  Determines the package category based on its weight:  
+- **`classify(weight: float) -> Literal["basic", "standard", "oversized"]`**  
+  Determines the package category based on weight:  
   - `"basic"`: Less than 1kg  
   - `"standard"`: Between 1kg and 5kg  
   - `"oversized"`: More than 5kg  
 
-- **`calculate_cost(weight: float, package_type: str) -> float`**:  
-  Computes the shipping cost using predefined base rates:  
+- **`calculate_cost(weight: float, package_type: str) -> float`**  
+  Computes shipping cost using predefined base rates:  
   - `"basic"`: $5.00  
   - `"standard"`: $7.50 + additional weight-based cost  
   - `"oversized"`: $17.00 + additional weight-based cost  
 
-### 6. `Package` Class  
+### **`Package`** class  
+Represents a package with attributes like dimensions, weight, type, approval status, and cost.  
 
-The `Package` class represents a package with specific attributes such as dimensions, weight, type, approval status, and shipping cost. It integrates the `PackageClassifier` to determine the package category and cost, its methods are:
+- **`__init__(self, package_id: int, dimensions: str, weight: float, observations: str) -> None`**  
+  Initializes a package, classifies it, and calculates its shipping cost.  
 
-- **`__init__(self, package_id: int, dimensions: str, weight: float, observations: str) -> None`**:  
-  Initializes a package, automatically classifies its type, and calculates the shipping cost. The package is not approved by default.  
+- **`update_info(self, dimensions: str, weight: float, observations: str) -> None`**  
+  Updates package details and recalculates classification and cost.  
 
-- **`update_info(self, dimensions: str, weight: float, observations: str) -> None`**:  
-  Updates the package's details (dimensions, weight, and observations) and recalculates its classification and shipping cost accordingly.  
+- **`approve(self) -> None`**  
+  Marks the package as approved for shipment.  
 
-- **`approve(self) -> None`**:  
-  Marks the package as approved for shipment.
+---
 
-### 7. `Shipment` Class  
+## **4. Shipment Management Classes**  
+These classes handle shipment tracking, updates, and management.  
 
-The `Shipment` class represents a shipment containing information about the sender, recipient, and associated packages, it inherits the methods of client and package its methods are:
+### **`Shipment`** class 
+Represents a shipment containing sender, recipient, and package information.  
 
-- **`__init__(self, shipment_id: int, sender: Client, recipient: Client, packages: List[Package], observation: str) -> None`**:  
-  Initializes a shipment, ensuring that all packages are approved before shipping. Also validates the recipient's address and calculates the total shipping cost. The shipment starts with an initial tracking status: `"Shipment created"`. 
+- **`__init__(self, shipment_id: int, sender: Client, recipient: Client, packages: List[Package], observation: str) -> None`**  
+  Initializes a shipment, ensuring all packages are approved before shipping.  
 
-- **`update_status(self, status: str) -> None`**:  
-  Updates the shipment’s tracking with a new status.  
+- **`update_status(self, status: str) -> None`**  
+  Updates the shipment’s tracking status.  
 
-- **`update_tracking(self, status: str) -> None`**:  
+- **`update_tracking(self, status: str) -> None`**  
   Adds a status update to the shipment’s tracking list.  
 
-- **`track_shipment(self) -> List[str]`**:  
-  Returns a list of all tracking status updates for the shipment.
-
-### 8. `PaymentMethod(ABC)` Class  
-
-The `PaymentMethod` class is an abstract base class that defines a structure for different payment methods. 
-
-- **`process_payment(self, amount: float) -> str`**:  
-  An abstract method that must be implemented by subclasses to process a payment of a given amount and return a confirmation message.  
-
-### 9. `PayPalPayment(PaymentMethod)` Class  
-
-The `PayPalPayment` class implements the `PaymentMethod` abstract class, providing functionality for processing payments via PayPal.  
-
-- **`process_payment(self, amount: float) -> str`**:  
-  Processes a payment of the specified amount and returns a confirmation message indicating that the payment was made using PayPal.  
-
-### 10. `CashPayment(PaymentMethod)` Class  
-
-The `CashPayment` class implements the `PaymentMethod` abstract class, allowing payments to be processed in cash at a branch location.  
-
-- **`process_payment(self, amount: float) -> str`**:  
-  Processes a payment of the specified amount and returns a confirmation message indicating that the payment was made in cash at a branch.  
-
-### 11. `CardPayment(PaymentMethod)` Class  
-
-The `CardPayment` class implements the `PaymentMethod` abstract class, enabling payments to be processed using a credit card.  
-
-- **`process_payment(self, amount: float) -> str`**:  
-  Processes a payment of the specified amount and returns a confirmation message indicating that the payment was made using a credit card.  
-
-### 12. `Invoice` Class  
-
-The `Invoice` class represents an invoice generated from one or more shipments, calculating the total cost and allowing payment processing.  
-
-- **`generate_invoice(self) -> str`**:  
-  Generates an invoice message indicating the invoice ID and the total amount to be paid.  
-
-- **`process_payment(self, payment_method: PaymentMethod) -> str`**:  
-  Processes the invoice payment using the specified payment method and returns a confirmation message.  
-
-### 13. `ManagementSystem` Class  
-
-The `ManagementSystem` class is responsible for managing clients, packages, shipments, and billing within the system. It provides methods for registering clients, handling packages, tracking shipments, and generating invoices.  
-
-- **`register_client(self, client: Client) -> None`**: Adds a new client to the system.  
-
-- **`add_package(self, package: Package) -> None`**: Approves and adds a package to the system.  
-
-- **`update_package(self, package_id: int, dimensions: str, weight: float, observations: str) -> bool`**: Updates the information of an existing package if found. Returns `True` if the update is successful, otherwise `False`.  
-
-- **`approve_package(self, package_id: int) -> bool`**: Approves a package by its ID. Returns `True` if successful, otherwise `False`.  
-
-- **`create_shipment(self, shipment_id: int, sender: Client, recipient: Client, packages: List[int], observation: str) -> None`**: Creates a new shipment with the selected packages and adds it to the system. Each package requires approval before inclusion.  
-
-- **`track_shipment(self, shipment_id: int) -> Optional[List[str]]`**: Retrieves the tracking details of a shipment by its ID. Returns a list of tracking updates if found, otherwise `None`.  
-
-- **`generate_invoice(self, invoice_id: int, shipment_ids: List[int]) -> str`**: Generates an invoice for the specified shipments. Returns the invoice details if shipments are found, otherwise returns `"No shipments found to invoice"`.  
-
-### 14. **`Terminal` Class**  
-
-The `Terminal` class represents the main interface of the package management system.  
-It allows operator authentication, client, package, and shipment management, as well as invoicing and payment processing.  
+- **`track_shipment(self) -> List[str]`**  
+  Returns a list of all tracking status updates.  
 
 ---
 
-##### **Attributes**  
+## **5. Payment and Invoice Management Classes**  
+These classes handle different payment methods and invoice generation.  
 
-- **`__management_system: ManagementSystem`**  
-  An instance of the management system that handles clients, packages, and shipments.  
+### **`PaymentMethod(ABC)`** class  
+Abstract class defining the structure for payment methods.  
 
-- **`__operator_credentials_set: list[tuple[str, str]]`**  
-  A set of credentials for registered operators in the system.  
+- **`process_payment(self, amount: float) -> str`**  
+  Must be implemented by subclasses to process a payment and return a confirmation message.  
+
+### **`PayPalPayment(PaymentMethod)`** class 
+Implements the `PaymentMethod` abstract class for PayPal payments.  
+
+- **`process_payment(self, amount: float) -> str`**  
+  Processes a PayPal payment and returns a confirmation message.  
+
+### **`CashPayment(PaymentMethod)`** class 
+Implements `PaymentMethod` for cash payments at a branch.  
+
+- **`process_payment(self, amount: float) -> str`**  
+  Processes a cash payment and returns a confirmation message.  
+
+### **`CardPayment(PaymentMethod)`**  class
+Implements `PaymentMethod` for credit card payments.  
+
+- **`process_payment(self, amount: float) -> str`**  
+  Processes a credit card payment and returns a confirmation message.  
+
+### **`Invoice`** class  
+Represents an invoice generated from one or more shipments.  
+
+- **`generate_invoice(self) -> str`**  
+  Generates an invoice message with the invoice ID and total amount.  
+
+- **`process_payment(self, payment_method: PaymentMethod) -> str`**  
+  Processes the invoice payment and returns a confirmation message.  
 
 ---
 
-#### **Methods**  
+## **6. System Management Classes**  
+These classes manage clients, shipments, packages, invoices, and general system operations.  
 
-##### **Authentication**  
+### **`ManagementSystem`** class 
+Handles clients, packages, shipments, and billing.  
 
+- **`register_client(self, client: Client) -> None`**  
+  Adds a new client to the system.  
+
+- **`add_package(self, package: Package) -> None`**  
+  Approves and adds a package to the system.  
+
+- **`update_package(self, package_id: int, dimensions: str, weight: float, observations: str) -> bool`**  
+  Updates package details and returns `True` if successful, otherwise `False`.  
+
+- **`approve_package(self, package_id: int) -> bool`**  
+  Approves a package by ID.  
+
+- **`create_shipment(self, shipment_id: int, sender: Client, recipient: Client, packages: List[int], observation: str) -> None`**  
+  Creates a shipment with the selected packages.  
+
+- **`track_shipment(self, shipment_id: int) -> Optional[List[str]]`**  
+  Retrieves tracking details of a shipment.  
+
+- **`generate_invoice(self, invoice_id: int, shipment_ids: List[int]) -> str`**  
+  Generates an invoice for specified shipments.  
+
+---
+
+## **7. Terminal and User Interface Classes**  
+These classes handle interaction between users and the system.  
+
+### **`Terminal`** class
+Represents the main interface of the package management system.  
+
+#### **Authentication**  
 - **`show_main_message(self) -> None`**  
-  Displays a welcome message on the terminal.  
+  Displays a welcome message.  
 
 - **`authenticate_credentials(self, user_token: str, password_token: str) -> bool`**  
-  Verifies if the entered credentials correspond to a registered operator.  
+  Verifies operator credentials.  
 
----
-
-##### **Client Management**  
-
+#### **Client Management**  
 - **`request_sender_info(self) -> Client`**  
-  Requests and returns the sender's information.  
+  Requests sender's information.  
 
 - **`request_recipient_info(self) -> Client`**  
-  Requests and returns the recipient's information.  
+  Requests recipient's information.  
 
 - **`__request_client_info(self, type: str) -> Client`**  
-  (Private) Requests the information of a client (sender or recipient) with data validation.  
+  Private method to request client information.  
 
----
-
-##### **Package Management**  
-
+#### **Package Management**  
 - **`request_package_info(self, n: int, package_id: int) -> List[Package]`**  
-  Requests the information of `n` packages and returns them as a list of `Package` objects.  
+  Requests package details and returns a list of packages.  
 
----
-
-##### **Shipment Management**  
-
+#### **Shipment Management**  
 - **`create_shipment(self) -> str`**  
-  Creates a new shipment with user-entered data and registers it in the system.  
+  Creates a shipment and registers it in the system.  
 
----
-
-##### **Invoicing and Payments**  
-
+#### **Invoicing and Payments**  
 - **`create_invoice(self) -> None`**  
-  Generates an invoice based on the shipments selected by the user and processes the payment.  
+  Generates an invoice and processes payment.  
 
 - **`select_payment_method(self) -> Optional[PaymentMethod]`**  
-  Allows the user to choose a payment method and returns an instance of `PaymentMethod`.  
+  Allows the user to choose a payment method.  
 
----
-
-##### **Search and Filtering**  
-
-- **`search_and_filter(self) -> None`**  
-  Allows searching and filtering clients, shipments, or packages in the system.  
-
+#### **Search and Filtering**  
 - **`search_client(self) -> None`**  
   Searches clients by name or document number.  
 
