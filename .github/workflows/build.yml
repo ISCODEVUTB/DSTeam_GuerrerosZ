@@ -35,13 +35,7 @@ jobs:
         with:
           name: coverage-report
           path: coverage.xml  # Guarda el reporte de cobertura como artefacto
-
-      - name: Set up Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-
+          
       - name: Install SonarScanner
         run: |
           curl -L -o sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip
