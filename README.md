@@ -8,6 +8,8 @@ The **Package management system (DSTeam_guerrerosZ)** development is a Python-ba
 
 The project is currently complete, featuring a functional Docker setup and utilizing SonarQube for code coverage and quality analysis.
 
+## Project Structure
+
 ## Installation  
 
 The **Package Management System (DSTeam_guerrerosZ)** requires Python 3.10 or later.
