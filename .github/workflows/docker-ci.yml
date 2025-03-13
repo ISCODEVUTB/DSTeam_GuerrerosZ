@@ -26,6 +26,29 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt || echo "No requirements.txt found"
 
+      - name: Run tests and generate coverage report
+        run: |
+          pip install coverage
+          coverage run -m pytest || echo "No tests found"
+          coverage xml -o coverage.xml
+
+      - name: Install SonarQube scanner
+        run: |
+          curl -sSLo sonar-scanner-cli.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
+          unzip sonar-scanner-cli.zip
+          sudo mv sonar-scanner-4.6.2.2472-linux /opt/sonar-scanner
+
+      - name: Run SonarQube scanner
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          /opt/sonar-scanner/bin/sonar-scanner \
+            -Dsonar.projectKey=your_project_key \
+            -Dsonar.sources=. \
+            -Dsonar.host.url=https://your-sonar-instance-url \
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
+            -Dsonar.python.coverage.reportPaths=coverage.xml
+
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
