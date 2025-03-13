@@ -1,45 +1,26 @@
 name: Build
-
 on:
   push:
     branches:
       - main
   pull_request:
     types: [opened, synchronize, reopened]
-
 jobs:
   sonarqube:
-    name: SonarQube Cloud
+    name: SonarQube
     runs-on: ubuntu-latest
-    
     steps:
       - uses: actions/checkout@v2
         with:
-          fetch-depth: 0  # Obtiene el historial completo para SonarQube
-
+          fetch-depth: 0
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.10'
-
-      - name: Install tox and dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install tox pytest pytest-cov
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      
-      - name: Run tests with tox
+          python-version: ${{ matrix.python }}
+      - name: Install tox and any other packages
+        run: pip install tox
+      - name: Run tox
         run: tox -e py
-      
-      - name: Generate coverage report
-        run: pytest --cov=. --cov-report=xml --cov-report=term
-      
-      - name: Upload coverage report
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-report
-          path: coverage.xml  # Guarda el reporte de cobertura como artefacto
-      
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v4
         env: 
