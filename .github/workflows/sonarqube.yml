@@ -36,6 +36,10 @@ jobs:
       - name: Verify coverage.xml
         run: ls -l coverage.xml
 
+      # Imprimir contenido de coverage.xml para depuración
+      - name: Print coverage.xml
+        run: cat coverage.xml
+
       # Subir el reporte de cobertura como artefacto en GitHub Actions
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
