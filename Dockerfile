@@ -1,19 +1,25 @@
 # Usa una imagen ligera de Python
 FROM python:3.10-slim
-FROM --platform=linux/amd64 python:3.10-slim
+# Crea un usuario no-root (por ejemplo, "appuser")
+RUN adduser --disabled-password --gecos '' appuser
 
-# Establecer el directorio de trabajo en el contenedor
+# Establece el directorio de trabajo
 WORKDIR /app
 
-# Copiar y instalar dependencias si existen
-COPY requirements.txt . 
+# Copia el archivo de requerimientos y instala dependencias
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copiar el código fuente al contenedor
-COPY . .
+# Copia el resto del código
+# COPY . /app
+COPY app.py .
+COPY src/ ./src/
 
-# Exponer el puerto en el que corre la app (ajústalo si es necesario)
-EXPOSE 5000
+# Cambia al usuario no-root
+USER appuser
 
-# Comando de inicio
+# Expone el puerto que usa la aplicación
+EXPOSE 8080
+
+# Comando para iniciar la aplicación
 CMD ["python", "app.py"]
