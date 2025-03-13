@@ -35,11 +35,18 @@ jobs:
       - name: Verify coverage.xml
         run: ls -l coverage.xml
 
+      - name: Set up Java 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
       - name: Install SonarQube scanner
         run: |
           curl -sSLo sonar-scanner-cli.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip
           unzip sonar-scanner-cli.zip
           sudo mv sonar-scanner-4.8.0.2856-linux /opt/sonar-scanner
+
 
       - name: Run SonarQube scanner
         env:
