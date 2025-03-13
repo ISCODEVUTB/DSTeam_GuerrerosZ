@@ -8,7 +8,6 @@ from src.paypal_payment import PayPalPayment
 from src.cash_payment import CashPayment
 from src.management_system import ManagementSystem
 from src.package_classifier import PackageClassifier
-import re
 from typing import Optional, List
 
 class Terminal:

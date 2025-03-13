@@ -1,5 +1,5 @@
 import unittest
-from src.operator import Operator
+from DSTeam_GuerrerosZ.src.person_operator import Operator
 
 class TestOperator(unittest.TestCase):
     def setUp(self):
