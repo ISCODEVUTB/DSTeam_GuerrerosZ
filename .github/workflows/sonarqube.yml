@@ -30,7 +30,11 @@ jobs:
       # Ejecutar pruebas y generar reporte de cobertura
       - name: Run tests with coverage
         run: |
-          PYTHONPATH=$PWD pytest --cov=. --cov-report=xml --cov-report=html
+          PYTHONPATH=$PWD pytest --cov=. --cov-report=xml:coverage.xml --cov-report=html --cov-report=term
+
+      # Verificar que coverage.xml existe
+      - name: Verify coverage.xml
+        run: ls -l coverage.xml
 
       # Subir el reporte de cobertura como artefacto en GitHub Actions
       - name: Upload coverage report
@@ -53,12 +57,12 @@ jobs:
           mv sonar-scanner-4.8.0.2856-linux /opt/sonar-scanner
           echo "/opt/sonar-scanner/bin" >> $GITHUB_PATH
           
-      # Ejecutar SonarQube Scanner
+      # Ejecutar SonarQube Scanner con logs de depuración
       - name: Run SonarQube Scanner
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          /opt/sonar-scanner/bin/sonar-scanner \
+          /opt/sonar-scanner/bin/sonar-scanner -X \
             -Dsonar.projectKey=ISCODEVUTB_DSTeam_GuerrerosZ \
             -Dsonar.sources=. \
             -Dsonar.host.url=https://sonarcloud.io \
