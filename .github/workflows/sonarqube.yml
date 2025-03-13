@@ -56,7 +56,7 @@ jobs:
           unzip sonar-scanner.zip
           mv sonar-scanner-4.8.0.2856-linux /opt/sonar-scanner
           echo "/opt/sonar-scanner/bin" >> $GITHUB_PATH
-          
+
       # Ejecutar SonarQube Scanner con logs de depuración
       - name: Run SonarQube Scanner
         env:
