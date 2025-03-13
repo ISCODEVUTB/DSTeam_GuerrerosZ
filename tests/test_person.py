@@ -1,7 +1,7 @@
 import unittest
 from src.person import Person
 from src.client import Client
-from DSTeam_GuerrerosZ.src.person_operator import Operator
+from src.person_operator import Operator
 
 class TestPerson(unittest.TestCase):
 
